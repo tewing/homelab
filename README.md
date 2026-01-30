@@ -61,6 +61,11 @@ This repository contains Terraform/Terragrunt configurations to provision and ma
 git clone --recurse-submodules <repo-url>
 cd homelab/proxmox-iac
 
+# Create the proxmox user and api key 
+ssh -i ~/.ssh/proxmox-1 pveum user add apiuser@pam
+ssh -i ~/.ssh/proxmox-1 pveum user token add apiuser@pam terragrunt
+
+
 # Configure your credentials (see detailed docs)
 cp clusters/k3s-example clusters/my-cluster
 cd clusters/my-cluster
