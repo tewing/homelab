@@ -62,9 +62,9 @@ git clone --recurse-submodules <repo-url>
 cd homelab/proxmox-iac
 
 # Create the proxmox user and api key 
-ssh -i ~/.ssh/proxmox-1 pveum user add apiuser@pam
-ssh -i ~/.ssh/proxmox-1 pveum user token add apiuser@pam terragrunt
-
+ssh -i ~/.ssh/proxmox-1 root@proxmox-1 pveum user add apiuser@pam
+ssh -i ~/.ssh/proxmox-1 root@proxmox-1 pveum user token add root@pam terragrunt
+ssh -i ~/.ssh/proxmox-1 root@proxmox-1 pveum aclmod / -token apiuser@pam\!terragrunt -role Administrator
 
 # Configure your credentials (see detailed docs)
 cp clusters/k3s-example clusters/my-cluster

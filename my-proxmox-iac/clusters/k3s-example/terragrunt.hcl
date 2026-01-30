@@ -48,6 +48,4 @@ inputs = {
 
   dns_servers = "192.168.1.1"
 
-  # If utilizing VLANs
-  # vlan_tag = 2
 }
