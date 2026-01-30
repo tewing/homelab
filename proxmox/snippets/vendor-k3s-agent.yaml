@@ -1,0 +1,10 @@
+#cloud-config
+runcmd:
+    - apt update
+    - apt install -y qemu-guest-agent
+    - systemctl start qemu-guest-agent
+    - curl -sfL https://get.k3s.io | sh -
+    - curl -sfL https://get.k3s.io | K3S_URL=https://k3s-server:6443 K3S_TOKEN=mynodetoken sh -
+    - echo yes >/var/log/CLOUD-INIT-RAN-TO-COMPLETION
+    - reboot
+# Taken from https://forum.proxmox.com/threads/combining-custom-cloud-init-with-auto-generated.59008/page-3#post-428772

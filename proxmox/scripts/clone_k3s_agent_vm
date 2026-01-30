@@ -1,0 +1,11 @@
+#!/bin/bash
+TEMPLATE=9001
+NEWID=$(pvesh get /cluster/nextid)
+VMNAME=k3s-agent-$NEWID
+qm clone $TEMPLATE $NEWID --name $VMNAME --full true
+qm set $NEWID --cicustom "vendor=local:snippets/vendor-k3s-agent.yaml"
+qm set $NEWID --sshkeys ~/.ssh/authorized_keys
+qm set $NEWID --onboot 1 
+qm set $NEWID --ostype l26
+qm resize $NEWID scsi0 60G
+qm start  $NEWID
