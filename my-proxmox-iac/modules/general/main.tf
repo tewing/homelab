@@ -2,15 +2,21 @@ terraform {
   required_version = ">= 0.14"
   required_providers {
     proxmox = {
-      source = "telmate/proxmox"
+      source  = "telmate/proxmox"
+      version = "3.0.2-rc07"
     }
   }
 }
+
+
+
 
 provider "proxmox" {
   pm_api_url          = var.prox_url
   pm_api_token_id     = var.prox_api_id
   pm_api_token_secret = var.prox_api_token
+  pm_tls_insecure     = true # By default Proxmox Virtual Environment uses self-signed certificates.
+  pm_debug            = true
 }
 
 resource "random_shuffle" "prox_nodes" {
@@ -29,10 +35,10 @@ resource "proxmox_vm_qemu" "nodes" {
   ipconfig0   = "ip=dhcp"
 
   network {
+    id       = 0
     model    = "virtio"
     bridge   = "vmbr0"
     firewall = true
-    tag      = var.vlan_tag
   }
 
   agent  = var.qemu_agent
@@ -40,15 +46,19 @@ resource "proxmox_vm_qemu" "nodes" {
   bios   = var.bios
   scsihw = var.scsihw
 
-  memory     = var.node_memory
-  cores      = var.node_cores
-  os_type    = var.os_type
+  memory  = var.node_memory
+  os_type = var.os_type
+
+  cpu {
+    cores = var.node_cores
+  }
   nameserver = var.dns_servers
   sshkeys    = var.ssh_key_public
   ciuser     = var.ssh_user
   cipassword = var.ssh_password
 
   disk {
+    slot    = "scsi0"
     type    = var.disk_type
     storage = var.storage_pool
     size    = var.node_disk_size

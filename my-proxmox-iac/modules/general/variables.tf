@@ -47,7 +47,7 @@ variable "dns_servers" {
 variable "disk_type" {
   description = "Disk type to use for volumes"
   type        = string
-  default     = "scsi"
+  default     = "disk"
 }
 
 variable "storage_pool" {
