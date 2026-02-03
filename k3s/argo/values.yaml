@@ -1,0 +1,23 @@
+# see https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
+#
+# helm repo add argo https://argoproj.github.io/argo-helm
+# helm install argocd --n argocd --create-namespace --values values.yaml  argo/argo-cd
+
+global:
+  domain: argocd.example.com
+
+configs:
+  params:
+    server.insecure: true
+
+certificate:
+  enabled: true
+
+server:
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    tls: false
