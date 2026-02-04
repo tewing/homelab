@@ -1,19 +1,20 @@
 # see https://github.com/dkoshkin/teslamate-helm-chart/blob/main/charts/teslamate/values.yaml
 
-image:
-  tag: "2.2.0"
-envFromSecrets:
-  - name: teslamate
-remotePostgresql:
-  enabled: true
-ingress:
-  enabled: true
-  annotations: {}
-  path: /
-  hosts:
-    - teslamate.example.com
+teslamate:
+  image:
+    tag: "2.2.0"
+  envFromSecrets:
+    - name: teslamate
+  remotePostgresql:
+    enabled: true
+  ingress:
+    enabled: true
+    annotations: {}
+    path: /
+    hosts:
+      - teslamate.example.com
 
-  # tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+    # tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
