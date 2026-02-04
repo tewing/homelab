@@ -1,6 +1,13 @@
 # see https://github.com/dkoshkin/teslamate-helm-chart/blob/main/charts/teslamate/values.yaml
 
 teslamate:
+  controllers:
+    main:
+      containers:
+        main:
+          image:
+            env:
+              ENCRYPTION_KEY: "zzz111222333"
   remotePostgresql:
     enabled: true
     host: postgres.postgres.svc
@@ -20,10 +27,3 @@ teslamate:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
-  controllers:
-    main:
-      containers:
-        main:
-          image:
-            env:
-              ENCRYPTION_KEY: "zzz111222333"
