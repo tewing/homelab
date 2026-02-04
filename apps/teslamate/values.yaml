@@ -1,0 +1,7 @@
+# see https://github.com/dkoshkin/teslamate-helm-chart/blob/main/charts/teslamate/values.yaml
+
+teslamate:
+  # Configuration values for a remote PostgreSQL database
+  remotePostgresql:
+    enabled: true
+    secretName: postgres-credentials
