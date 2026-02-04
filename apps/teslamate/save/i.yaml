@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: teslamate:networking.k8s.io/Ingress:teslamate/teslamate
+  labels:
+    app.kubernetes.io/instance: teslamate
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: teslamate
+    helm.sh/chart: teslamate-0.4.0
+  name: teslamate
+  namespace: teslamate
+spec:
+  rules: null

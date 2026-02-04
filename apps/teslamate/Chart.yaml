@@ -1,28 +1,19 @@
 apiVersion: v2
-name: teslamate
-description: Teslamate Helm chart
-
-# A chart can be either an 'application' or a 'library' chart.
-#
-# Application charts are a collection of templates that can be packaged into versioned archives
-# to be deployed.
-#
-# Library charts provide useful utilities or functions for the chart developer. They're included as
-# a dependency of application charts to inject those utilities and functions into the rendering
-# pipeline. Library charts do not define any templates and therefore cannot be deployed.
-type: application
-
-# This is the chart version. This version number should be incremented each time you make changes
-# to the chart and its templates, including the app version.
-# Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.4.0
-
-# This is the version number of the application being deployed. This version number should be
-# incremented each time you make changes to the application. Versions are not expected to
-# follow Semantic Versioning. They should reflect the version the application is using.
-appVersion: "v1.32.0"
-
+appVersion: v1.32.0
 dependencies:
-  - name: teslamate
-    version: 0.4.0
-    repository: https://dkoshkin.github.io/teslamate-helm-chart
+- name: grafana
+  repository: https://grafana.github.io/helm-charts
+  version: 8.9.0
+description: "A self-hosted data logger for your Tesla \U0001F698"
+home: https://github.com/dkoshkin/teslamate-helm-chart
+icon: https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Tesla_Motors.svg/793px-Tesla_Motors.svg.png
+keywords:
+- teslamate
+- tesla
+maintainers:
+- email: dimitri.koshkin@gmail.com
+  name: Dimitri Koshkin
+name: teslamate
+sources:
+- https://github.com/adriankumpf/teslamate
+version: 0.4.0
