@@ -5,14 +5,10 @@ teslamate:
     - name: teslamate
   remotePostgresql:
     enabled: true
-
   ingress:
     enabled: true
     annotations: {}
-      # kubernetes.io/ingress.class: nginx
-      # kubernetes.io/tls-acme: "true"
     path: /
-    pathType: ImplementationSpecific
     hosts:
       - teslamate.example.com
     # tls: []
