@@ -2,13 +2,10 @@
 
 teslamate:
   envFromSecrets:
-    - name: teslamate-encryption-key
+    - name: teslamate
   remotePostgresql:
     enabled: true
-    host: postgres.postgres.svc
-    user: teslamate
-    password: sdfsdfq3es
-    database: teslamate
+
   ingress:
     enabled: true
     annotations: {}
