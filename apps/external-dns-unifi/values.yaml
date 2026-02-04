@@ -1,6 +1,6 @@
 # see https://github.com/kashalls/external-dns-unifi-webhook for more details
 
-external-dns-unifi:
+external-dns:
   fullnameOverride: external-dns-unifi
   logLevel: &logLevel debug
   provider:
