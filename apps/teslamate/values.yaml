@@ -13,6 +13,7 @@ teslamate:
     path: /
     hosts:
       - teslamate.example.com
+
     # tls: []
     #  - secretName: chart-example-tls
     #    hosts:
