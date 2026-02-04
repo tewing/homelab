@@ -18,3 +18,9 @@ teslamate:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
+
+  grafana:
+    # override the image with the Teslama Grafana image that has the charts baked in
+    image:
+      repository: teslamate/grafana
+      tag: latest
