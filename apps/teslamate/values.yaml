@@ -1,7 +1,7 @@
 # see https://github.com/dkoshkin/teslamate-helm-chart/blob/main/charts/teslamate/values.yaml
 
 teslamate:
-  envfromsecrets:
+  envFromSecrets:
     - name: teslamate-encryption-key
   remotePostgresql:
     enabled: true
