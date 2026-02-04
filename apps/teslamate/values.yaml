@@ -7,3 +7,5 @@ teslamate:
     user: teslamate
     password: sdfsdfq3es
     database: teslamate
+  ingress:
+    enabled: true
