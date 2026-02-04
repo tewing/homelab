@@ -20,3 +20,11 @@ teslamate:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
+
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          env:
+            ENCRYPTION_KEY: "zzz111222333"
