@@ -5,6 +5,9 @@ teslamate:
     tag: "2.2.0"
   envFromSecrets:
     - name: teslamate
+  env:
+    - name: LOG_LEVEL
+      value: debug
   remotePostgresql:
     enabled: true
   ingress:
