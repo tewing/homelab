@@ -3,3 +3,11 @@ alloy:
     # -- Type of controller to use for deploying Grafana Alloy in the cluster.
     # Must be one of 'daemonset', 'deployment', or 'statefulset'.
     type: "deployment"
+
+  configMap:
+    content: |-
+      // Write your Alloy config here:
+      logging {
+        level = "info"
+        format = "logfmt"
+      }
