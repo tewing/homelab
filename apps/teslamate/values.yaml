@@ -6,7 +6,7 @@ teslamate:
   envFromSecrets:
     - name: teslamate
   env:
-    LOG_LEVEL: "info"
+    LOG_LEVEL: "debug"
   remotePostgresql:
     enabled: true
   ingress:
