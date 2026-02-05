@@ -7,12 +7,8 @@ alloy:
   configMap:
     content: |-
       // Write your Alloy config here:
-      logging {
-        level = "info"
-        format = "logfmt"
-      }
       loki.write "LABEL" {
         endpoint {
-          url = "http://foo.com/""
+          url = "http://foo.com/"
         }
       }
