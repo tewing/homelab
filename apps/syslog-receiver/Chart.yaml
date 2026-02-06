@@ -1,11 +1,11 @@
 apiVersion: v2
 name: syslog-receiver
-description: Alloy Helm chart
+description: fluentbit-for-aws Helm chart
 type: application
-version: 1.5.3
-appVersion: "18.1.0"
+version: 0.2.0
+appVersion:
 
 dependencies:
-  - name: alloy
-    version: 1.5.3
-    repository: https://grafana.github.io/helm-charts
+  - name: aws-for-fluent-bit
+    version: 0.2.0
+    repository: https://aws.github.io/eks-charts

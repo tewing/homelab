@@ -1,1 +1,2 @@
-Grafana Alloy acts as a robust, modern syslog receiver by using the `loki.source.syslog` component to ingest RFC5424 and RFC3164 messages via UDP/TCP on ports 514. It allows labeling, filtering, and exporting logs to an s3 bucket using the 
+switching to fluentbit-for-aws
+

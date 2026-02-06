@@ -1,0 +1,11 @@
+apiVersion: v2
+name: syslog-receiver
+description: Alloy Helm chart
+type: application
+version: 1.5.3
+appVersion: "18.1.0"
+
+dependencies:
+  - name: alloy
+    version: 1.5.3
+    repository: https://grafana.github.io/helm-charts
