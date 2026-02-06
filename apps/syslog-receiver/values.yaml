@@ -23,7 +23,6 @@ alloy:
             logs = [otelcol.exporter.awss3.logs.input]
           }
         }
-
         otelcol.exporter.awss3 "logs" {
           s3_uploader {
             region = "us-east-1"
