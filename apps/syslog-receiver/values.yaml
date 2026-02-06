@@ -17,6 +17,7 @@ fluent-bit:
   config:
     # Define the input, filter (optional), and output plugins
     inputs: |
+
       [INPUT]
           Name              syslog
           Tag               syslog.*
@@ -67,3 +68,8 @@ fluent-bit:
     volumeMounts:
       - name: fluentbit-storage
         mountPath: /tmp/flb-storage
+    extraPorts:
+      - name: syslog-tcp
+        containerPort: 5140
+        hostPort: 5140
+        protocol: TCP
