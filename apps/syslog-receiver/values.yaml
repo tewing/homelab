@@ -51,9 +51,9 @@ fluent-bit:
     create: true
   serviceAccount:
     create: true
-    # Annotate with an IAM role ARN for auth (recommended over static credentials)
-    annotations:
-      ://eks.amazonaws.com: arn:aws:iam::123456789012:role/your-fluentbit-s3-role
+    # # Annotate with an IAM role ARN for auth (recommended over static credentials)
+    # annotations:
+    #   ://eks.amazonaws.com: arn:aws:iam::123456789012:role/your-fluentbit-s3-role
 
   # Ensure the pod has a writeable volume mounted for buffering
   Deployment:
