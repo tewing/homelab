@@ -4,15 +4,8 @@ fluent-bit:
   replicaCount: 1
 
   service:
-    flush: 1
-    logLevel: info
-    parsersFile: parsers.conf
-    # Ensure a writable filesystem for S3 buffering
-    storage:
-      type: filesystem
-      path: /tmp/flb-storage
-      # Limit the storage size to prevent disk filling up
-      totalLimitSize: 1G
+    type: LoadBalancer
+    port: 5140
 
   config:
     # Define the input, filter (optional), and output plugins
@@ -76,15 +69,15 @@ fluent-bit:
       protocol: TCP
       port: 5140
 
-  ingress:
-    enabled: true
-    ingressClassName: traefik
-    annotations: {}
-    #  kubernetes.io/ingress.class: nginx
-    #  kubernetes.io/tls-acme: "true"
-    hosts:
-      - host: syslog.example.com
-    tls: []
-    #  - secretName: fluent-bit-example-tld
-    #    hosts:
-    #      - fluent-bit.example.tld
+  # ingress:
+  #   enabled: true
+  #   ingressClassName: traefik
+  #   annotations: {}
+  #   #  kubernetes.io/ingress.class: nginx
+  #   #  kubernetes.io/tls-acme: "true"
+  #   hosts:
+  #     - host: syslog.example.com
+  #   tls: []
+  #   #  - secretName: fluent-bit-example-tld
+  #   #    hosts:
+  #   #      - fluent-bit.example.tld
