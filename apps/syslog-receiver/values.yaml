@@ -15,3 +15,22 @@ alloy:
             url = "http://foo.com/"
           }
         }
+        loki.source.syslog "rsyslog_tcp" {
+          listener {
+            address   = "0.0.0.0:1514"
+            protocol  = "tcp"
+            use_incoming_timestamp = false
+            idle_timeout = "120s"
+            label_structured_data = true
+            use_rfc5424_message = true
+            max_message_length = 8192
+            syslog_format = "rfc5424"
+            labels    = {
+              source = "rsyslog_tcp",
+              protocol = "tcp",
+              format = "rfc5424",
+              port = "1514",
+              service_name = "syslog_rfc5424_1514_tcp",
+            }
+          }    
+        }
