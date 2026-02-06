@@ -4,8 +4,14 @@ fluent-bit:
   replicaCount: 1
 
   service:
+    enabled: true
     type: LoadBalancer
-    port: 5140
+    annotations: {}
+    ports:
+      - name: syslog-tcp
+        port: 5140
+        protocol: TCP
+        targetPort: 5140
 
   config:
     # Define the input, filter (optional), and output plugins
