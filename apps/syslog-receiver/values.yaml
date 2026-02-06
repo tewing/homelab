@@ -74,6 +74,7 @@ fluent-bit:
       containerPort: 5140
       hostPort: 5140
       protocol: TCP
+      port: 5140
 
   ingress:
     enabled: true
