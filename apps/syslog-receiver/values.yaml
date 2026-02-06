@@ -16,8 +16,10 @@ alloy:
             protocol  = "tcp"
             syslog_format = "rfc5424"
           }
-          forward_to = [s3data]
+          forward_to = [loki.write.zzz.receiver]
         }
-        remote.s3 "s3data" {
-          path = "s3://tewing-syslog-test/"
+        loki.write "zzz" {
+          endpoint {
+            url = "http://foo.com/"
+          }
         }
