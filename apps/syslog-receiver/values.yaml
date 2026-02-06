@@ -45,7 +45,7 @@ fluent-bit:
           # Timeout for uploads
           Upload_timeout    5m
           # Optional: Store logs as newline delimited JSON, raw logs, etc.
-          Format            s3_key_format
+          # Format            s3_key_format
           # Disable the default date key if you want raw logs
           json_date_key     false
           # Ensure data is uploaded in order
