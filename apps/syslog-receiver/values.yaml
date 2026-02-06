@@ -42,7 +42,6 @@ fluent-bit:
           Total_file_size   10M # Size of files to upload to S3
           Upload_timeout    5m # Timeout for uploads
           # Optional: Store logs as newline delimited JSON, raw logs, etc.
-          Format            s3_key_format 
           json_date_key     false # Disable the default date key if you want raw logs
           # Ensure data is uploaded in order
           Preserve_data_ordering On
