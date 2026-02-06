@@ -5,7 +5,6 @@ fluent-bit:
 
   service:
     flush: 1
-    port: 5140
     logLevel: info
     parsersFile: parsers.conf
     # Ensure a writable filesystem for S3 buffering
