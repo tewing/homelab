@@ -2,3 +2,64 @@
 fluent-bit:
   kind: Deployment
   replicaCount: 1
+
+  service:
+    flush: 1
+    logLevel: info
+    parsersFile: parsers.conf
+    # Ensure a writable filesystem for S3 buffering
+    storage:
+      type: filesystem
+      path: /tmp/flb-storage
+      # Limit the storage size to prevent disk filling up
+      totalLimitSize: 1G
+
+  config:
+    # Define the input, filter (optional), and output plugins
+    inputs: |
+      [INPUT]
+          Name              syslog
+          Tag               syslog.*
+          Listen            0.0.0.0
+          Port              5140
+          Mode              tcp
+          # Optional: Use a specific parser if needed, e.g., syslog-rfc5424
+          Parser            syslog-rfc3164
+
+    filters: |
+      # Optional: Add filters here if needed, e.g., Kubernetes metadata enrichment
+      [FILTER]
+          Name              stdout
+          Match             syslog.*
+
+    outputs: |
+      [OUTPUT]
+          Name              s3
+          Match             syslog.*
+          Region            us-east-1 # Replace with your AWS region
+          Bucket            your-s3-bucket-name # Replace with your S3 bucket name
+          Store_dir         /tmp/flb-storage/s3 # Directory for local buffering
+          Total_file_size   10M # Size of files to upload to S3
+          Upload_timeout    5m # Timeout for uploads
+          # Optional: Store logs as newline delimited JSON, raw logs, etc.
+          Format            json_lines 
+          json_date_key     false # Disable the default date key if you want raw logs
+          # Ensure data is uploaded in order
+          Preserve_data_ordering On
+
+  rbac:
+    create: true
+  serviceAccount:
+    create: true
+    # Annotate with an IAM role ARN for auth (recommended over static credentials)
+    annotations:
+      ://eks.amazonaws.com: arn:aws:iam::123456789012:role/your-fluentbit-s3-role
+
+  # Ensure the pod has a writeable volume mounted for buffering
+  Deployment:
+    volumes:
+      - name: fluentbit-storage
+        emptyDir: {}
+    volumeMounts:
+      - name: fluentbit-storage
+        mountPath: /tmp/flb-storage
