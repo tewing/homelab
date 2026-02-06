@@ -27,7 +27,7 @@ fluent-bit:
           Parser            syslog-rfc3164
 
     filters: |
-      # Optional: Add filters here if needed, e.g., Kubernetes metadata enrichment
+      # Optional: Add filters here if needed.
       [FILTER]
           Name              stdout
           Match             syslog.*
@@ -36,13 +36,18 @@ fluent-bit:
       [OUTPUT]
           Name              s3
           Match             syslog.*
-          Region            us-east-1 # Replace with your AWS region
-          Bucket            your-s3-bucket-name # Replace with your S3 bucket name
-          Store_dir         /tmp/flb-storage/s3 # Directory for local buffering
-          Total_file_size   10M # Size of files to upload to S3
-          Upload_timeout    5m # Timeout for uploads
+          Region            us-east-1
+          Bucket            tewing-syslog-test
+          # Directory for local buffering
+          Store_dir         /tmp/flb-storage/s3
+          # Size of files to upload to S3
+          Total_file_size   10M
+          # Timeout for uploads
+          Upload_timeout    5m
           # Optional: Store logs as newline delimited JSON, raw logs, etc.
-          json_date_key     false # Disable the default date key if you want raw logs
+          Format            s3_key_format
+          # Disable the default date key if you want raw logs
+          json_date_key     false
           # Ensure data is uploaded in order
           Preserve_data_ordering On
 
