@@ -32,5 +32,7 @@ alloy:
               port = "1514",
               service_name = "syslog_rfc5424_1514_tcp",
             }
-          }    
+          } 
+          relabel_rules = loki.relabel.remote_syslog.rules
+          forward_to = [loki.write.syslog_tcp.receiver]  
         }
