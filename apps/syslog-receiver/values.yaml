@@ -68,8 +68,22 @@ fluent-bit:
     volumeMounts:
       - name: fluentbit-storage
         mountPath: /tmp/flb-storage
-    extraPorts:
-      - name: syslog-tcp
-        containerPort: 5140
-        hostPort: 5140
-        protocol: TCP
+
+  extraPorts:
+    - name: syslog-tcp
+      containerPort: 5140
+      hostPort: 5140
+      protocol: TCP
+
+  ingress:
+    enabled: true
+    ingressClassName: Traefik
+    annotations: {}
+    #  kubernetes.io/ingress.class: nginx
+    #  kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: syslog.example.com
+    tls: []
+    #  - secretName: fluent-bit-example-tld
+    #    hosts:
+    #      - fluent-bit.example.tld
