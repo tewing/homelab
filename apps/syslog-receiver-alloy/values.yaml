@@ -52,6 +52,7 @@ alloy:
             batch {
               min_size = 3
               max_size = 5
+              sizer = items
               flush_timeout = "10s"
             }
           }
