@@ -1,1 +1,0 @@
-{"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1770438793673025026","observedTimeUnixNano":"1770438793673098907","body":{"stringValue":"Pod sandbox changed, pod will be restarted\r"}}]}]}]}
