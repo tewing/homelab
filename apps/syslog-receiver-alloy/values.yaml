@@ -49,10 +49,6 @@ alloy:
           sending_queue {
             enabled = true
             queue_size = 3
-            batch {
-              send_batch_size = 3
-              timeout = "10s"
-            }
           }
           s3_uploader {
             region = "us-east-1"
