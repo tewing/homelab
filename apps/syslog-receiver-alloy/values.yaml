@@ -38,7 +38,7 @@ alloy:
             protocol  = "tcp"
             syslog_format = "rfc5424"
           }
-          forward_to = [otelcol.exporter.awss3.logs]
+          forward_to = [otelcol.exporter.awss3.logs.input]
         }
         otelcol.exporter.awss3 "logs" {
           marshaler {
