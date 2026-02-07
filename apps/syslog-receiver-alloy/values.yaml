@@ -39,7 +39,7 @@ alloy:
           listener {
             address = "0.0.0.0:1513"
             protocol  = "tcp"
-            syslog_format = "rfc5424"
+            syslog_format = "rfc3164"
           }
           forward_to = [otelcol.receiver.loki.default.receiver]
         }
