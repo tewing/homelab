@@ -24,6 +24,10 @@ alloy:
         port: 1513
         targetPort: 1513
         protocol: TCP
+      - name: syslog-udp
+        port: 1515
+        targetPort: 1515
+        protocol: TCP
     stabilityLevel: "experimental"
     configMap:
       content: |-
