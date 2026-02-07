@@ -48,10 +48,11 @@ alloy:
           }
           sending_queue {
             enabled = true
-            queue_size = 3
+            queue_size = 1000
+            sizer = "items"
             batch {
-              min_size = 3
-              max_size = 5
+              min_size = 10
+              max_size = 100
               sizer = "items"
               flush_timeout = "10s"
             }

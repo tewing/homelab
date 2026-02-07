@@ -1,0 +1,1 @@
+{"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1770438785486377375","observedTimeUnixNano":"1770438785486467720","body":{"stringValue":"container started id=abc123 image=myapp:v1.2.3\r\n\r\n\r\nasdfdf\r\ndfdsf\r\nds\r\ndafd\r\nda\r\n\r"}}]}]}]}

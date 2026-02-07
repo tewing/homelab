@@ -1,0 +1,1 @@
+{"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1770439169157577315","observedTimeUnixNano":"1770439169159405030","body":{"stringValue":"Interface GigabitEthernet0/1 down\r"}}]}]}]}

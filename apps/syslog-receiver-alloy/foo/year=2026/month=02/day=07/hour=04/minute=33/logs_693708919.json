@@ -1,0 +1,1 @@
+{"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1770438794194293350","observedTimeUnixNano":"1770438794194369503","body":{"stringValue":"Slow query (3.2s): SELECT * FROM events WHERE created_at > ?\r"}}]}]}]}

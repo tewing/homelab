@@ -1,0 +1,1 @@
+{"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1770438857512969576","observedTimeUnixNano":"1770438857513050760","body":{"stringValue":"Connection closed (reason: connection closed)\r"}}]}]}]}
