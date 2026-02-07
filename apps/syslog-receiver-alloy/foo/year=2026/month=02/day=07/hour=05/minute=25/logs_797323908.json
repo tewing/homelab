@@ -1,1 +1,0 @@
-{"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1770441908985830464","observedTimeUnixNano":"1770441908985995760","body":{"stringValue":"DROP IN eth0 SRC=192.168.1.100 DST=10.0.0.5 PROTO=TCP DPT=22\r"}}]}]}]}

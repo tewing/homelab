@@ -1,1 +1,0 @@
-{"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1770438773544932976","observedTimeUnixNano":"1770438773545082054","body":{"stringValue":"eth0: link up, 1000Mb/s, full duplex\r"}}]}]}]}
