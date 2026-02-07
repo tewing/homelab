@@ -1,0 +1,1 @@
+{"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1770438794806954265","observedTimeUnixNano":"1770438794807062344","body":{"stringValue":"secret accessed path=secret/data/app\r"}}]}]}]}

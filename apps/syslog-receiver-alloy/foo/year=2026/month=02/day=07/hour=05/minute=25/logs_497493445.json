@@ -1,0 +1,1 @@
+{"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1770441909683422278","observedTimeUnixNano":"1770441909683596568","body":{"stringValue":"connection received: host=192.168.1.20 port=54321\r"}}]}]}]}

@@ -38,12 +38,7 @@ alloy:
             protocol  = "tcp"
             syslog_format = "rfc5424"
           }
-          forward_to = [otelcol.receiver.loki.default.receiver]
-        }
-        otelcol.receiver.loki "default" {
-          output {
-            logs = [otelcol.exporter.awss3.logs.input]
-          }
+          forward_to = [otelcol.exporter.awss3.logs]
         }
         otelcol.exporter.awss3 "logs" {
           marshaler {
