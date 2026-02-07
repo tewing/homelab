@@ -5,6 +5,9 @@ alloy:
     type: "deployment"
   service:
     type: LoadBalancer
+    # Hostname for the LoadBalancer (e.g. external-dns creates syslog.example.com -> LB IP)
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: syslog.example.com
   alloy:
     extraEnv:
       - name: AWS_ACCESS_KEY_ID

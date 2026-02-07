@@ -1,20 +1,20 @@
 <34>1 2025-02-06T14:23:01.123Z gateway.example.com firewall - - [meta sequenceId="1"] DROP IN eth0 SRC=192.168.1.100 DST=10.0.0.5 PROTO=TCP DPT=22
-<38>1 2025-02-06T14:23:02.456Z web01.example.com nginx 12345  - [origin software="nginx" swVersion="1.24.0"] client 192.168.1.50:54321 "GET /api/health HTTP/1.1" 200 42
+<38>1 2025-02-06T14:23:02.456Z web01.example.com nginx 12345 - [origin software="nginx" swVersion="1.24.0"] client 192.168.1.50:54321 GET /api/health HTTP/1.1 200 42
 <134>1 2025-02-06T14:23:03.789Z auth.example.com sshd 8765 - [exampleSDID@32473 iut="3" eventSource="sshd"] Accepted publickey for admin from 192.168.1.10 port 44122
 <130>1 2025-02-06T14:23:04.012Z db01.example.com postgres 456 - [postgres@12345 db="app_prod" user="replicator"] connection received: host=192.168.1.20 port=54321
-<86>1 2025-02-06T14:23:05.345Z app01.example.com myapp 9999  - [app@12345 version="2.1.0" env="production"] User login successful user_id=12345
+<86>1 2025-02-06T14:23:05.345Z app01.example.com myapp 9999 - [app@12345 version="2.1.0" env="production"] User login successful user_id=12345
 <90>1 2025-02-06T14:23:06.678Z k8s-node-1 kubelet - - [kubernetes@12345 pod="syslog-receiver-abc" namespace="observability"] Pod sandbox changed, pod will be restarted
 <110>1 2025-02-06T14:23:07.901Z mail.example.com postfix/smtpd 1234 - [postfix@12345 stage="connect"] connect from unknown[10.0.0.100]
 <42>1 2025-02-06T14:23:08.234Z router.core.example.com kernel - - [kernel@12345 interface="eth0"] eth0: link up, 1000Mb/s, full duplex
 <78>1 2025-02-06T14:23:09.567Z cache01.example.com redis 1 - [redis@12345 role="master"] Background saving started by pid 7890
-<46>1 2025-02-06T14:23:10.890Z lb01.example.com haproxy  - - [haproxy@12345 fe="http-in" be="backend" srv="web1"] 192.168.1.100:50123 [06/Feb/2025:14:23:10] GET /index.html 200 1024
-<122>1 2025-02-06T14:23:11.123Z backup.example.com cron  - - [cron@12345 cmd="backup.sh"] (root) CMD (/opt/scripts/backup.sh)
-<74>1 2025-02-06T14:23:12.456Z api.example.com api-server 44321  - [api@12345 request_id="req-abc-123" latency_ms="45"] POST /v1/orders 201
-<38>1 2025-02-06T14:23:13.789Z dns01.example.com named  - - [bind@12345 zone="example.com"] client 192.168.1.30#45123: query: example.com IN A + (192.168.1.30)
+<46>1 2025-02-06T14:23:10.890Z lb01.example.com haproxy - - [haproxy@12345 fe="http-in" be="backend" srv="web1"] 192.168.1.100:50123 06/Feb/2025:14:23:10 GET /index.html 200 1024
+<122>1 2025-02-06T14:23:11.123Z backup.example.com cron - - [cron@12345 cmd="backup.sh"] (root) CMD (/opt/scripts/backup.sh)
+<74>1 2025-02-06T14:23:12.456Z api.example.com api-server 44321 - [api@12345 request_id="req-abc-123" latency_ms="45"] POST /v1/orders 201
+<38>1 2025-02-06T14:23:13.789Z dns01.example.com named - - [bind@12345 zone="example.com"] client 192.168.1.30#45123: query: example.com IN A + (192.168.1.30)
 <134>1 2025-02-06T14:23:14.012Z vault.example.com vault 1 - [vault@12345 path="secret/data/app"] secret accessed path=secret/data/app
 <86>1 2025-02-06T14:23:15.345Z worker01.example.com celery 789 - [celery@12345 task="process_order" queue="default"] Task process_order[abc-123] succeeded in 2.3s
-<110>1 2025-02-06T14:23:16.678Z mail.example.com postfix/cleanup 1235 - [postfix@12345 msgid="<msg@example.com>"] message-id=<msg@example.com>
+<110>1 2025-02-06T14:23:16.678Z mail.example.com postfix/cleanup 1235 - [postfix@12345 msgid="msg-at-example-com"] message-id=msg-at-example-com
 <42>1 2025-02-06T14:23:17.901Z switch01.example.com snmpd - - [snmp@12345 trap="linkDown"] Interface GigabitEthernet0/1 down
-<78>1 2025-02-06T14:23:18.234Z queue01.example.com rabbitmq 1 - [rabbitmq@12345 vhost="/" user="worker"] Connection closed (reason: connection closed)
+<78>1 2025-02-06T14:23:18.234Z queue01.example.com rabbitmq 1 - [rabbitmq@12345 vhost="root" user="worker"] Connection closed (reason: connection closed)
 <130>1 2025-02-06T14:23:19.567Z db02.example.com mysql 100 - [mysql@12345 db="analytics"] Slow query (3.2s): SELECT * FROM events WHERE created_at > ?
 <90>1 2025-02-06T14:23:20.890Z k8s-node-2 containerd - - [containerd@12345 container="app-xyz"] container started id=abc123 image=myapp:v1.2.3
