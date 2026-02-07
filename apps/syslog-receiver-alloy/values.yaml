@@ -47,7 +47,7 @@ alloy:
           listener {
             address = "0.0.0.0:1515"
             protocol  = "udp"
-            syslog_format = "rfc5424"
+            syslog_format = "rfc3164"
           }
           forward_to = [otelcol.receiver.loki.default.receiver]
         }
