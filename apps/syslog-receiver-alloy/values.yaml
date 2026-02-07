@@ -4,7 +4,7 @@ alloy:
     # Must be one of 'daemonset', 'deployment', or 'statefulset'.
     type: "deployment"
   alloy:
-    stabilityLevel: "generally-available"
+    stabilityLevel: "experimental"
     configMap:
       content: |-
         logging {
