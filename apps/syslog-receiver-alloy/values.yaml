@@ -5,7 +5,6 @@ alloy:
     type: "deployment"
   service:
     type: LoadBalancer
-    # Hostname for the LoadBalancer (e.g. external-dns creates syslog.example.com -> LB IP)
     annotations:
       external-dns.alpha.kubernetes.io/hostname: syslog.example.com
   alloy:
@@ -36,6 +35,14 @@ alloy:
           listener {
             address = "0.0.0.0:1513"
             protocol  = "tcp"
+            syslog_format = "rfc5424"
+          }
+          forward_to = [otelcol.receiver.loki.default.receiver]
+        }
+        loki.source.syslog "syslog_udp" {
+          listener {
+            address = "0.0.0.0:1515"
+            protocol  = "udp"
             syslog_format = "rfc5424"
           }
           forward_to = [otelcol.receiver.loki.default.receiver]
