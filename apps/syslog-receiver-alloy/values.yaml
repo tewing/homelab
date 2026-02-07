@@ -43,6 +43,9 @@ alloy:
           }
         }
         otelcol.exporter.awss3 "logs" {
+          marshaler {
+            type = "body"
+          }
           s3_uploader {
             region = "us-east-1"
             s3_bucket = "tewing-syslog-test"

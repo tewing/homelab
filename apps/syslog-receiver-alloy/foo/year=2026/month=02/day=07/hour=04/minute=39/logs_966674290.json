@@ -1,0 +1,1 @@
+{"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1770439170338185975","observedTimeUnixNano":"1770439170338273940","body":{"stringValue":"Task process_order[abc-123] succeeded in 2.3s\r"}}]}]}]}
