@@ -4,6 +4,19 @@ alloy:
   controller:
     type: "deployment"
   alloy:
+    # AWS credentials from secret s3-credentials (kubectl create secret generic s3-credentials
+    # --from-literal=access_key_id='...' --from-literal=secret_access_key='...' -n <alloy-namespace>)
+    extraEnv:
+      - name: AWS_ACCESS_KEY_ID
+        valueFrom:
+          secretKeyRef:
+            name: s3-credentials
+            key: access_key_id
+      - name: AWS_SECRET_ACCESS_KEY
+        valueFrom:
+          secretKeyRef:
+            name: s3-credentials
+            key: secret_access_key
     extraPorts:
       - name: syslog
         port: 1513
