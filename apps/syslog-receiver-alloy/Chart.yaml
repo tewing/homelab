@@ -1,5 +1,5 @@
 apiVersion: v2
-name: syslog-receiver
+name: syslog-receiver-alloy
 description: Alloy Helm chart
 type: application
 version: 1.5.3
