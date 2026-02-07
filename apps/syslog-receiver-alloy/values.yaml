@@ -45,7 +45,7 @@ alloy:
         otelcol.exporter.awss3 "logs" {
           s3_uploader {
             region = "us-east-1"
-            s3_bucket = "logs_bucket"
+            s3_bucket = "tewing-syslog-test"
             s3_prefix = "logs"
           }
         }
