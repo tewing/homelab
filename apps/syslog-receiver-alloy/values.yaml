@@ -3,9 +3,9 @@
 alloy:
   controller:
     type: "deployment"
+  service:
+    type: LoadBalancer
   alloy:
-    # AWS credentials from secret s3-credentials (kubectl create secret generic s3-credentials
-    # --from-literal=access_key_id='...' --from-literal=secret_access_key='...' -n <alloy-namespace>)
     extraEnv:
       - name: AWS_ACCESS_KEY_ID
         valueFrom:
