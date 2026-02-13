@@ -7,11 +7,11 @@ teslamate:
   #   - name: postgres-credentials
   remotePostgresql:
     enabled: true
-    secretName: postgres-credentials
-    # host: postgres-rw.postgres.svc
-    # user: postgres
-    # password: iIlDch0gXaapqziVPihq7G5DokwD5qdb
-    # database: teslamate
+    # secretName: postgres-credentials
+    host: postgres-rw.postgres.svc
+    user: postgres
+    password: sdfsdfq3es
+    database: teslamate
 
     # teslamate:
     #   image:
