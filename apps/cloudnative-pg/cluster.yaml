@@ -15,7 +15,7 @@ spec:
         comment: teslamate application user
         login: true
         createdb: true
-        superuser: false
+        superuser: true
         inRoles:
           - pg_monitor
           - pg_signal_backend
