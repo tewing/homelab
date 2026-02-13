@@ -3,8 +3,8 @@
 teslamate:
   env:
     LOG_LEVEL: "debug"
-  envFromSecrets:
-    - name: postgres-credentials
+  # envFromSecrets:
+  #   - name: postgres-credentials
   remotePostgresql:
     enabled: true
     secretName: postgres-credentials
