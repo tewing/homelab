@@ -1,6 +1,10 @@
 # see https://github.com/dkoshkin/teslamate-helm-chart/blob/main/charts/teslamate/values.yaml
 
 teslamate:
+  env:
+    LOG_LEVEL: "debug"
+  envFromSecrets:
+    - name: postgres-credentials
   remotePostgresql:
     enabled: true
     secretName: postgres-credentials
