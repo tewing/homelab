@@ -1,28 +1,37 @@
 # see https://github.com/dkoshkin/teslamate-helm-chart/blob/main/charts/teslamate/values.yaml
 
 teslamate:
-  image:
-    tag: "2.2.0"
-  envFromSecrets:
-    - name: teslamate
-  env:
-    LOG_LEVEL: "debug"
   remotePostgresql:
     enabled: true
-  ingress:
-    enabled: true
-    annotations: {}
-    path: /
-    hosts:
-      - teslamate.example.com
+    secretName: postgres-credentials
+    # host: postgres-rw.postgres.svc
+    # user: postgres
+    # password: iIlDch0gXaapqziVPihq7G5DokwD5qdb
+    # database: teslamate
 
-    # tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
+    # teslamate:
+    #   image:
+    #     tag: "2.2.0"
+    #   envFromSecrets:
+    #     - name: teslamate
+    #   env:
+    #     LOG_LEVEL: "debug"
+    #   remotePostgresql:
+    #     enabled: true
+    #   ingress:
+    #     enabled: true
+    #     annotations: {}
+    #     path: /
+    #     hosts:
+    #       - teslamate.example.com
 
-  grafana:
-    # override the image with the Teslama Grafana image that has the charts baked in
-    image:
-      repository: teslamate/grafana
-      tag: latest
+    #     # tls: []
+    #     #  - secretName: chart-example-tls
+    #     #    hosts:
+    #     #      - chart-example.local
+
+    #   grafana:
+    #     # override the image with the Teslama Grafana image that has the charts baked in
+    #     image:
+    #       repository: teslamate/grafana
+    #       tag: latest
