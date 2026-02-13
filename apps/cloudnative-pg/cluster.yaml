@@ -1,0 +1,23 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+  namespace: postgres
+spec:
+  instances: 3
+  storage:
+    size: 1Gi
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.2
+  managed:
+    roles:
+      - name: teslamate
+        ensure: present
+        comment: teslamate application user
+        login: true
+        createdb: true
+        superuser: false
+        inRoles:
+          - pg_monitor
+          - pg_signal_backend
+        passwordSecret:
+          name: cluster-postgres-teslamate
