@@ -9,7 +9,7 @@ teslamate:
     enabled: true
     # secretName: postgres-credentials
     host: postgres-rw.postgres.svc
-    user: postgres
+    user: teslamate
     password: sdfsdfq3es
     database: teslamate
 
