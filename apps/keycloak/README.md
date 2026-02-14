@@ -14,24 +14,17 @@ argocd app create keycloak \
 ## Create database credentials secret
 
 ```bash
-kubectl create secret generic postgres-credentials \
-  -n teslamate \
-  --from-literal=DATABASE_HOST=postgres-rw.postgres.svc \
-  --from-literal=DATABASE_NAME=teslamate \
-  --from-literal=DATABASE_USER=teslamate \
-  --from-literal=DATABASE_PASS=zzz
+kubectl create secret generic keycloak-db-credentials \
+  --from-literal=db-password='zzzzzzz' \
+  --from-literal=db-username=keycloak-db-user
 ```
-
-## Create encryption key (for internal storage of Tesla OAuth secret)
 
 ```bash
-kubectl create secret generic encryption-key \
-  -n teslamate \
-  --from-literal=ENCRYPTION_KEY=zzz11122333
+kubectl create secret generic keycloak-credentials \
+  --from-literal=admin-password="zzzzzzzzz"
 ```
 
-## Retrieve Grafana admin password
 
-```bash
-kubectl get secret teslamate-grafana -o jsonpath="{.data.admin-password}" | base64 --decode
-```
+
+
+
