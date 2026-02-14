@@ -1,0 +1,10 @@
+apiVersion: v2
+name: keycloak
+description: Keycloak Helm chart
+type: application
+version: 0.14.6
+# appVersion: "v1.32.0"
+dependencies:
+  - name: keycloak
+    version: 0.14.6
+    repository: oci://registry-1.docker.io/cloudpirates/keycloak

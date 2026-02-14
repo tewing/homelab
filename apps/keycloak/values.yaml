@@ -1,0 +1,4 @@
+# see https://github.com/CloudPirates-io/helm-charts/blob/main/charts/keycloak/values.yaml
+
+keycloak:
+  fee: foo
