@@ -4,15 +4,13 @@ teslamate:
   env:
     LOG_LEVEL: "debug"
   envFromSecrets:
-    - name: postgres-password
+    - name: postgres-credentials
     - name: encryption-key
   remotePostgresql:
     enabled: true
-    host: postgres-rw.postgres.svc
-    user: teslamate
-    database: teslamate
+
   image:
-    tag: "2.2.0"
+    tag: latest
 
   ingress:
     enabled: true
@@ -20,20 +18,11 @@ teslamate:
     path: /
     hosts:
       - teslamate.example.com
-
-    # envFromSecrets:
-    #   - name: teslamate
-    # env:
-    #   LOG_LEVEL: "debug"
-    # remotePostgresql:
-    #   enabled: true
-    # tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
-
   grafana:
-    # override the image with the Teslama Grafana image that has the charts baked in
+    # https://github.com/grafana-community/helm-charts/blob/main/charts/grafana/values.yaml
+    # https://github.com/teslamate-org/teslamate/blob/main/grafana/Dockerfile
     image:
       repository: teslamate/grafana
       tag: latest
+    envFromSecrets:
+      - name: postgres-credentials
