@@ -1,4 +1,48 @@
 # see https://github.com/CloudPirates-io/helm-charts/blob/main/charts/keycloak/values.yaml
 
 keycloak:
-  fee: foo
+  replicaCount: 3
+  image:
+    tag: "26.5"
+
+  keycloak:
+    hostname: "keycloak.example.com"
+    existingSecret: "keycloak-credentials"
+    secretKeys:
+      adminPasswordKey: "admin-password"
+    httpEnabled: true
+    httpsEnabled: false
+    production: true
+    proxyHeaders: "xforwarded"
+
+  database:
+    type: "postgres"
+    host: "postgres-rw.postgres.svc"
+    name: keycloak
+    existingSecret: "keycloak-db-credentials"
+    secretKeys:
+      passwordKey: "db-password"
+      usernameKey: "db-username"
+
+  postgres:
+    enabled: false
+
+  ingress:
+    enabled: true
+    className: "nginx-internal"
+    annotations:
+      external-dns.alpha.kubernetes.io/ingress-hostname-source: defined-hosts-only
+      external-dns.alpha.kubernetes.io/target: nginx-ingress-internal-mng.ia.postmanlabs.com
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    hosts:
+      - host: keycloak.example.com
+        paths:
+          - path: /
+            pathType: Prefix
+    # tls:
+    #   - secretName: ia-postmanlabs-com-tls
+    #     hosts:
+    #       - quality-auth.ia.postmanlabs.com
+
+  persistence:
+    enabled: false
