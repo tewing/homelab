@@ -4,11 +4,10 @@ teslamate:
   env:
     LOG_LEVEL: "debug"
   envFromSecrets:
-    - name: postgres-credentials
     - name: encryption-key
   remotePostgresql:
     enabled: true
-
+    secretName: postgres-credentials
   image:
     tag: latest
 
@@ -18,11 +17,10 @@ teslamate:
     path: /
     hosts:
       - teslamate.example.com
+
   grafana:
     # https://github.com/grafana-community/helm-charts/blob/main/charts/grafana/values.yaml
     # https://github.com/teslamate-org/teslamate/blob/main/grafana/Dockerfile
     image:
       repository: teslamate/grafana
       tag: latest
-    envFromSecrets:
-      - name: postgres-credentials
