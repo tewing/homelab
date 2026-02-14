@@ -6,8 +6,8 @@ metadata:
 spec:
   instances: 3
   storage:
-    size: 1Gi
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.2
+    size: 8Gi
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.1
   managed:
     roles:
       - name: teslamate
