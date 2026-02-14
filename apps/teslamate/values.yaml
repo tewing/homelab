@@ -5,6 +5,7 @@ teslamate:
     LOG_LEVEL: "debug"
   envFromSecrets:
     - name: postgres-password
+    - name: encryption-key
   remotePostgresql:
     enabled: true
     host: postgres-rw.postgres.svc
