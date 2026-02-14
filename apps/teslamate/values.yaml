@@ -4,6 +4,7 @@ teslamate:
   env:
     LOG_LEVEL: "debug"
   envFromSecrets:
+    - name: postgres-credentials
     - name: encryption-key
   remotePostgresql:
     enabled: true
@@ -24,3 +25,5 @@ teslamate:
     image:
       repository: teslamate/grafana
       tag: latest
+    envFromSecrets:
+      - name: postgres-credentials
