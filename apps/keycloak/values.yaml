@@ -29,10 +29,10 @@ keycloak:
 
   ingress:
     enabled: true
-    className: "nginx-internal"
+    className: "traefik"
     annotations:
-      external-dns.alpha.kubernetes.io/ingress-hostname-source: defined-hosts-only
-      external-dns.alpha.kubernetes.io/target: nginx-ingress-internal-mng.ia.postmanlabs.com
+      #   external-dns.alpha.kubernetes.io/ingress-hostname-source: defined-hosts-only
+      #   external-dns.alpha.kubernetes.io/target: nginx-ingress-internal-mng.ia.postmanlabs.com
       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     hosts:
       - host: keycloak.example.com
@@ -40,9 +40,9 @@ keycloak:
           - path: /
             pathType: Prefix
     # tls:
-    #   - secretName: ia-postmanlabs-com-tls
+    #   - secretName: zzz-tls
     #     hosts:
-    #       - quality-auth.ia.postmanlabs.com
+    #       - keycloak.example.com
 
   persistence:
     enabled: false
