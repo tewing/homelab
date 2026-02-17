@@ -1,0 +1,11 @@
+# See https://github.com/longhorn/charts/blob/v1.12.x/charts/longhorn/values.yaml
+
+ingress:
+  # -- Setting that allows Longhorn to generate ingress records for the Longhorn UI service.
+  enabled: true
+  host: longhorn.example.com
+
+defaultBackupStore:
+  # Must be a backup target URL (e.g. s3://bucket@region/), not a label like "AWS"
+  backupTarget: "s3://longhorn-backup-te@us-east-1/"
+  backupTargetCredentialSecret: longhorn-backup-credentials
