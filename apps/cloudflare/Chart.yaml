@@ -1,0 +1,11 @@
+apiVersion: v2
+name: cloudflared
+description: Cloudflare tunnel endpoint
+type: application
+version: 2.2.6
+appVersion: "2026.1.2"
+
+dependencies:
+  - name: cloudflared
+    version: 2.2.6
+    repository: https://community-charts.github.io
