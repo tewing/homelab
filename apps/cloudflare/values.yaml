@@ -10,6 +10,6 @@ cloudflared:
       name: cert-pem-file-secret
 
   ingress:
-    - hostname: *.te-lab.org # or "*.example.com" (ensure a CNAME record for "*" is defined in your DNS)
+    - hostname: "*.te-lab.org"
       service: http://traefik.kube-system.svc.cluster.local:80
     - service: http_status:404
