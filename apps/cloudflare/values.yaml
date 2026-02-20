@@ -3,3 +3,8 @@
 cloudflared:
   tunnelConfig:
     name: tewing-home
+  tunnelSecrets:
+    existingConfigJsonFileSecret:
+      name: config-json-file-secret
+    existingPemFileSecret:
+      name: cert-pem-file-secret
