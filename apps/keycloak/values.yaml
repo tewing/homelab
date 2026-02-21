@@ -31,8 +31,7 @@ keycloak:
     enabled: true
     className: "traefik"
     annotations:
-      #   external-dns.alpha.kubernetes.io/ingress-hostname-source: defined-hosts-only
-      #   external-dns.alpha.kubernetes.io/target: nginx-ingress-internal-mng.ia.postmanlabs.com
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     hosts:
       - host: keycloak.te-lab.org
