@@ -38,10 +38,10 @@ keycloak:
         paths:
           - path: /
             pathType: Prefix
-    # tls:
-    #   - secretName: zzz-tls
-    #     hosts:
-    #       - keycloak.example.com
+    tls:
+      - secretName: keycloak-tls
+        hosts:
+          - keycloak.te-lab.org
 
   persistence:
     enabled: false
