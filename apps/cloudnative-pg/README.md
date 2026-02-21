@@ -32,7 +32,7 @@ kubectl get cluster <CLUSTERNAME> --watch
 # Wait for the status to show "Cluster in healthy state".
 ```
 
-## Create postgres user credentials with:
+## Create teslamate user credentials with:
 
 ```bash 
 kubectl create secret generic cluster-postgres-teslamate \
@@ -41,11 +41,27 @@ kubectl create secret generic cluster-postgres-teslamate \
   --from-literal=password=zzzzz 
 ```
 
+## Create keycloak user credentials with:
+
+```bash 
+kubectl create secret generic cluster-postgres-keycloak \
+  --namespace postgres \
+  --from-literal=username=keycloak-db-user \
+  --from-literal=password=zzzzz 
+```
+
+## Create databases:
+
+```bash
+kubectl apply -f db-teslamate.yaml 
+kubectl apply -f db-keycloak.yaml 
+```
 
 ## Connect to the database
 
 ```bash
-kubectl port-forward svc/postgres-rw 5432:5432
+kubectl port-forward -n postgres svc/postgres-rw 5432:5432
 # In another terminal:
 psql -h localhost -U teslamate -d teslamate
+\dt+
 ```

@@ -21,7 +21,7 @@ spec:
           - pg_signal_backend
         passwordSecret:
           name: cluster-postgres-teslamate
-      - name: keycloak
+      - name: keycloak-db-user
         ensure: present
         comment: keycloak application user
         login: true

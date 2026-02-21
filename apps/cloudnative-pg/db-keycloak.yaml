@@ -4,6 +4,6 @@ metadata:
   name: postgres-keycloak
 spec:
   name: keycloak
-  owner: keycloak
+  owner: keycloak-db-user
   cluster:
     name: postgres
