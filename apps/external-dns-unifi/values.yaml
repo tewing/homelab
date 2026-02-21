@@ -39,4 +39,4 @@ external-dns:
   sources: ["ingress", "service"]
   txtOwnerId: default
   txtPrefix: k8s.
-  domainFilters: ["example.com"] # replace with your domain
+  domainFilters: ["example.com", "te-lab.org"]
