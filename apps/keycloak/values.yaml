@@ -35,7 +35,7 @@ keycloak:
       #   external-dns.alpha.kubernetes.io/target: nginx-ingress-internal-mng.ia.postmanlabs.com
       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     hosts:
-      - host: keycloak.example.com
+      - host: keycloak.te-lab.org
         paths:
           - path: /
             pathType: Prefix

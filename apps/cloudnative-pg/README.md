@@ -54,7 +54,7 @@ kubectl create secret generic cluster-postgres-keycloak \
 
 ```bash
 kubectl apply -f db-teslamate.yaml 
-kubectl apply -f db-keycloak.yaml 
+kubectl apply -f db-*.yaml 
 ```
 
 ## Connect to the database
