@@ -32,7 +32,7 @@ keycloak:
     className: "traefik"
     annotations:
       cert-manager.io/cluster-issuer: "letsencrypt-prod"
-      # nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     hosts:
       - host: keycloak.te-lab.org
         paths:
