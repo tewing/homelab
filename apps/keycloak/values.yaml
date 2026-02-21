@@ -1,7 +1,7 @@
 # see https://github.com/CloudPirates-io/helm-charts/blob/main/charts/keycloak/values.yaml
 
 keycloak:
-  replicaCount: 3
+  replicaCount: 1
   image:
     tag: "26.5"
 
@@ -11,7 +11,7 @@ keycloak:
     secretKeys:
       adminPasswordKey: "admin-password"
     httpEnabled: true
-    httpsEnabled: false
+    httpsEnabled: true
     production: true
     proxyHeaders: "xforwarded"
 
@@ -32,7 +32,7 @@ keycloak:
     className: "traefik"
     annotations:
       cert-manager.io/cluster-issuer: "letsencrypt-prod"
-      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      # nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     hosts:
       - host: keycloak.te-lab.org
         paths:

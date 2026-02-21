@@ -19,9 +19,11 @@ kubectl create secret generic keycloak-db-credentials \
   --from-literal=db-username=keycloak-db-user
 ```
 
+## retrieve admin password
+
 ```bash
-kubectl create secret generic keycloak-credentials \
-  --from-literal=admin-password="zzzzzzzzz"
+kubectl get secret -n keycloak keycloak-credentials \
+   -o jsonpath="{.data.admin-password}" | base64 -d; echo  
 ```
 
 
