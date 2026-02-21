@@ -11,7 +11,7 @@ keycloak:
     secretKeys:
       adminPasswordKey: "admin-password"
     httpEnabled: true
-    httpsEnabled: true
+    httpsEnabled: false
     production: true
     proxyHeaders: "xforwarded"
 
