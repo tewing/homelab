@@ -7,5 +7,4 @@ version: 0.14.6
 dependencies:
   - name: keycloak
     version: 0.14.6
-    # Use GHCR instead of Docker Hub OCI (Docker Hub requires auth and returns 401)
     repository: oci://ghcr.io/cloudpirates-io/helm-charts
