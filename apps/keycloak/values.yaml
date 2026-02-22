@@ -7,7 +7,7 @@ keycloak:
 
   keycloak:
     # hostname: "keycloak.te-lab.org"
-    existingSecret: "keycloak-credentials"
+    # existingSecret: "keycloak-credentials"
     secretKeys:
       adminPasswordKey: "admin-password"
     httpEnabled: true
