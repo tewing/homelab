@@ -11,12 +11,12 @@ argocd app create openclaw \
     --sync-option CreateNamespace=true
 ```
 
-## Create database credentials secret
+## Create  secret
 
 ```bash
-kubectl create secret generic keycloak-db-credentials \
-  --from-literal=db-password='zzzzzzz' \
-  --from-literal=db-username=keycloak-db-user
+kubectl create secret generic openclaw-env-secret -n openclaw \
+  --from-literal=ANTHROPIC_API_KEY=sk-ant-xxx \
+  --from-literal=OPENCLAW_GATEWAY_TOKEN=your-token
 ```
 
 
