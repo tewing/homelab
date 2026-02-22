@@ -17,9 +17,9 @@ openclaw:
   #   merge     (default) — runtime UI changes survive restarts
   #   overwrite — strict GitOps; config replaced on every start
   # ----------------------------------------------------------
-  configMode: overwrite
 
   app-template:
+    configMode: overwrite
     configMaps:
       config:
         # @schema type:boolean;default:true
@@ -257,6 +257,7 @@ openclaw:
       # or the node IP range on bare metal.
       trustedProxies:
         - 10.0.0.0/8 # adjust to your cluster pod/node CIDR
+        - 10.42.0.0/16 # covers 10.42.x.x — standard k3s/Flannel pod CIDR
         - 192.168.0.0/16 # common home/lab LAN range
 
       llm:
