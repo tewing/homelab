@@ -15,7 +15,7 @@ teslamate:
   ingress:
     enabled: true
     annotations:
-      traefik.ingress.kubernetes.io/router.middlewares: "forward-auth@kubernetescrd"
+      # traefik.ingress.kubernetes.io/router.middlewares: "forward-auth@kubernetescrd"
     path: /
     hosts:
       - teslamate.example.com
