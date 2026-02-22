@@ -17,7 +17,7 @@ openclaw:
   #   merge     (default) — runtime UI changes survive restarts
   #   overwrite — strict GitOps; config replaced on every start
   # ----------------------------------------------------------
-  configMode: merge
+  configMode: overwrite
 
   app-template:
     # --------------------------------------------------------
