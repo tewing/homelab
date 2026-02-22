@@ -1,11 +1,184 @@
 # see https://github.com/serhanekicii/openclaw-helm/blob/main/charts/openclaw/values.yaml
+# generated with Claude.ai
 
 openclaw:
+  # ----------------------------------------------------------
+  # Config mode
+  #   merge     (default) — runtime UI changes survive restarts
+  #   overwrite — strict GitOps; config replaced on every start
+  # ----------------------------------------------------------
+  configMode: merge
+
   app-template:
+    # --------------------------------------------------------
+    # Main controller / deployment
+    # --------------------------------------------------------
     controllers:
       main:
+        type: deployment
+        replicas: 1 # OpenClaw cannot scale horizontally
+
         containers:
           main:
+            image:
+              repository: ghcr.io/openclaw/openclaw
+              tag: latest
+              pullPolicy: Always # dev: always pull latest
+
+            # ------------------------------------------------
+            # Create this Secret before installing:
+            #
+            #   kubectl create secret generic openclaw-env-secret \
+            #     -n openclaw \
+            #     --from-literal=OPENAI_API_KEY=sk-xxx \
+            #     --from-literal=OPENCLAW_GATEWAY_TOKEN=your-token
+            # ------------------------------------------------
             envFrom:
               - secretRef:
                   name: openclaw-env-secret
+
+            env:
+              TZ: America/Los_Angeles
+
+            # ------------------------------------------------
+            # Relaxed resource limits for development
+            # ------------------------------------------------
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: "1"
+                memory: 1Gi
+
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 18789
+                  initialDelaySeconds: 30
+                  periodSeconds: 20
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 18789
+                  initialDelaySeconds: 15
+                  periodSeconds: 10
+
+    # --------------------------------------------------------
+    # Service
+    # --------------------------------------------------------
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 18789
+
+    # --------------------------------------------------------
+    # Ingress
+    # Using ingress-nginx on bare metal. For bare-metal
+    # clusters, MetalLB or NodePort is typically used to
+    # expose the ingress controller.
+    # --------------------------------------------------------
+    ingress:
+      main:
+        enabled: true
+        className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: web # change to websecure for HTTPS
+          # Uncomment below for TLS with cert-manager:
+          # cert-manager.io/cluster-issuer: letsencrypt-staging
+          # traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          # traefik.ingress.kubernetes.io/router.tls: "true"
+        hosts:
+          - host: openclaw.local # ← add to /etc/hosts or local DNS
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+        # tls:                    # uncomment to enable TLS
+        #   - secretName: openclaw-dev-tls
+        #     hosts:
+        #       - openclaw.local
+
+    # --------------------------------------------------------
+    # Persistent Storage
+    # On bare metal, uses the cluster's default StorageClass.
+    # Common options: local-path (k3s), openebs-hostpath,
+    # nfs-client, or longhorn.
+    # --------------------------------------------------------
+    persistence:
+      data:
+        enabled: true
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: "" # blank = cluster default StorageClass
+        # storageClass: local-path    # k3s / Rancher
+        # storageClass: openebs-hostpath
+        # storageClass: nfs-client
+        # storageClass: longhorn
+        globalMounts:
+          - path: /data
+
+    # --------------------------------------------------------
+    # Network policy — disabled for dev simplicity.
+    # Enable and tighten rules before moving to production.
+    # --------------------------------------------------------
+    networkpolicies:
+      main:
+        enabled: false
+
+    # --------------------------------------------------------
+    # openclaw application config (openclaw.json5)
+    # --------------------------------------------------------
+    openclaw:
+      # Trusted proxy — set to your ingress controller pod CIDR
+      # or the node IP range on bare metal.
+      trustedProxies:
+        - 10.0.0.0/8 # adjust to your cluster pod/node CIDR
+        # - 192.168.0.0/16  # common home/lab LAN range
+
+      llm:
+        provider: openai # anthropic | openai | openrouter | ollama
+        model: gpt-4o
+        # baseUrl: ""             # required for openrouter / ollama
+
+      timezone: America/Los_Angeles
+
+      # ── Messaging channels ──────────────────────────────
+      # Uncomment the channels you want to enable.
+      # Tokens should live in the Secret, not here.
+
+      # channels:
+      #   telegram:
+      #     enabled: true
+      #   discord:
+      #     enabled: false
+      #   slack:
+      #     enabled: false
+
+      # ── Skills ──────────────────────────────────────────
+      # skills:
+      #   - name: web-search
+      #   - name: github
+
+    # --------------------------------------------------------
+    # Pod-level settings
+    # --------------------------------------------------------
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
