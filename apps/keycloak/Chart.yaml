@@ -8,3 +8,6 @@ dependencies:
   - name: keycloak
     version: 0.14.6
     repository: oci://ghcr.io/cloudpirates-io/helm-charts
+  - name: oauth2-proxy
+    version: 10.1.4
+    repository: https://oauth2-proxy.github.io/manifests
