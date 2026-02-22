@@ -153,7 +153,7 @@ openclaw:
       # or the node IP range on bare metal.
       trustedProxies:
         - 10.0.0.0/8 # adjust to your cluster pod/node CIDR
-        # - 192.168.0.0/16  # common home/lab LAN range
+        - 192.168.0.0/16 # common home/lab LAN range
 
       llm:
         provider: openai # anthropic | openai | openrouter | ollama
