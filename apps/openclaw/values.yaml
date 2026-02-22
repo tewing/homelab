@@ -103,7 +103,7 @@ openclaw:
         enabled: true
         className: traefik
         annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: web # change to websecure for HTTPS
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure # change to websecure for HTTPS
           # Uncomment below for TLS with cert-manager:
           # cert-manager.io/cluster-issuer: letsencrypt-staging
           # traefik.ingress.kubernetes.io/router.entrypoints: websecure
