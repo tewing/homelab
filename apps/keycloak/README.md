@@ -7,7 +7,7 @@ argocd app create keycloak \
     --repo https://github.com/tewing/homelab \
     --path apps/keycloak \
     --dest-server https://kubernetes.default.svc \
-    --dest-namespace keycloak \
+    --dest-namespace auth \
     --sync-option CreateNamespace=true
 ```
 
@@ -22,7 +22,7 @@ kubectl create secret generic keycloak-db-credentials \
 ## retrieve admin password
 
 ```bash
-kubectl get secret -n keycloak keycloak-credentials \
+kubectl get secret -n auth keycloak \
    -o jsonpath="{.data.admin-password}" | base64 -d; echo  
 ```
 

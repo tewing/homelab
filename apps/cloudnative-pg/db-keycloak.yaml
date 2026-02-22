@@ -7,3 +7,5 @@ spec:
   owner: keycloak-db-user
   cluster:
     name: postgres
+  # Add this field:
+  # ensure: absent # remove the database
