@@ -1,0 +1,47 @@
+# see https://github.com/CloudPirates-io/helm-charts/blob/main/charts/keycloak/values.yaml
+
+keycloak:
+  replicaCount: 1
+  image:
+    tag: "26.5"
+
+  keycloak:
+    # hostname: "keycloak.te-lab.org"
+    # existingSecret: "keycloak-credentials"
+    secretKeys:
+      adminPasswordKey: "admin-password"
+    httpEnabled: true
+    httpsEnabled: false
+    production: true
+    proxyHeaders: "xforwarded"
+
+  database:
+    type: "postgres"
+    host: "postgres-rw.postgres.svc"
+    name: keycloak
+    existingSecret: "keycloak-db-credentials"
+    secretKeys:
+      passwordKey: "db-password"
+      usernameKey: "db-username"
+
+  postgres:
+    enabled: false
+
+  ingress:
+    enabled: true
+    className: "traefik"
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    hosts:
+      - host: keycloak.te-lab.org
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: keycloak-tls
+        hosts:
+          - keycloak.te-lab.org
+
+  persistence:
+    enabled: false

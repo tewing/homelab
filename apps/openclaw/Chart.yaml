@@ -1,0 +1,10 @@
+apiVersion: v2
+name: openclaw
+description: openclaw Helm chart
+type: application
+version: 1.3.19
+# appVersion: "v1.32.0"
+dependencies:
+  - name: openclaw
+    version: 1.3.19
+    repository: https://serhanekicii.github.io/openclaw-helm
