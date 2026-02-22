@@ -51,26 +51,26 @@ openclaw:
                 cpu: "1"
                 memory: 1Gi
 
-            # probes:
-            #   liveness:
-            #     enabled: true
-            #     custom: true
-            #     spec:
-            #       httpGet:
-            #         path: /
-            #         port: 18789
-            #       initialDelaySeconds: 30
-            #       periodSeconds: 20
-            #       failureThreshold: 5
-            #   readiness:
-            #     enabled: true
-            #     custom: true
-            #     spec:
-            #       httpGet:
-            #         path: /
-            #         port: 18789
-            #       initialDelaySeconds: 15
-            #       periodSeconds: 10
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 18789
+                  initialDelaySeconds: 30
+                  periodSeconds: 20
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 18789
+                  initialDelaySeconds: 15
+                  periodSeconds: 10
 
     # --------------------------------------------------------
     # Service
