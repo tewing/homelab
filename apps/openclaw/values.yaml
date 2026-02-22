@@ -109,7 +109,7 @@ openclaw:
           # traefik.ingress.kubernetes.io/router.entrypoints: websecure
           # traefik.ingress.kubernetes.io/router.tls: "true"
         hosts:
-          - host: openclaw.local # ← add to /etc/hosts or local DNS
+          - host: openclaw.example.com # ← add to /etc/hosts or local DNS
             paths:
               - path: /
                 pathType: Prefix
@@ -117,7 +117,7 @@ openclaw:
                   identifier: main
                   port: http
         # tls:                    # uncomment to enable TLS
-        #   - secretName: openclaw-dev-tls
+        #   - secretName: openclaw-tls
         #     hosts:
         #       - openclaw.local
 
