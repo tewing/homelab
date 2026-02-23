@@ -57,7 +57,7 @@ Once Argo is up, install each application defined under `apps/` to roll out indi
 ## Hardware sourcing, links, and pricing
 
 - Public wishlist (source of pricing data): <https://www.amazon.com/hz/wishlist/ls/2CXIWUZURGSGO>
-- All prices reflect Amazon listings captured on **2026-02-23** from the exported wishlist PDF Terry shared in Slack.
+- All prices reflect Amazon listings captured on **2026-02-23**
 
 | Item (Amazon link) | Purpose / where it’s used | Price (USD, 2026-02-23) |
 |--------------------|---------------------------|---------------------------|
@@ -69,8 +69,7 @@ Once Argo is up, install each application defined under `apps/` to roll out indi
 | [NETGEAR 5-port Gigabit unmanaged switch](https://www.amazon.com/dp/B07PFYM5MZ/?ref_=list_c_wl_lv_ov_lig_dp_it) | Aggregates Pi + mini PCs in the rack | $18.99 |
 | [10Gsupxsel Cat6 Ethernet cable (2 ft)](https://www.amazon.com/dp/B0CQXG1WPC/?ref_=list_c_wl_lv_ov_lig_dp_it) | Short patch leads inside the rack | $14.49 |
 
-> ✳︎ Prices above are verbatim from the PDF export of the wishlist and include Amazon’s “as of” timestamp of 2026-02-23. Update this section whenever new sourcing or pricing needs to be tracked.
-
+ 
 ## Resources
 
 - [K3s documentation](https://docs.k3s.io/)
