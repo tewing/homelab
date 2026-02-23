@@ -6,7 +6,7 @@ Operational notes, manifests, and automation for my physical K3s cluster. Everyt
 
 - **K3s everywhere** – Lightweight Kubernetes with embedded etcd across all control-plane nodes.
 - **GitOps-first** – Apps (and Argo itself) are expressed as Helm values / manifests inside this repo, so the cluster state is driven entirely from Git.
-- **Homelab-friendly hardware** – Low-power mini PCs for the control plane plus a Pi 5 for edge / automation work.
+- **Homelab-friendly hardware** – Low-power mini PCs for the control plane plus a Pi 5 for ARM64 workloads.
 
 ## Cluster topology
 
@@ -15,7 +15,7 @@ Operational notes, manifests, and automation for my physical K3s cluster. Everyt
 | `k1` | Control-plane + worker | [GMKtec G3S Mini PC](https://www.amazon.com/dp/B0FQT44ZCJ?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1), 16GB RAM, 512GB M.2 NVMe SSD, Intel N95, Ubuntu Server 22.04.5 LTS | Runs etcd + system workloads |
 | `k2` | Control-plane + worker | Same spec as `k1` | Adds redundancy for etcd/HA + capacity for general workloads |
 | `k3` | Control-plane + worker | Same spec as `k1` | Adds redundancy for etcd/HA + capacity for general workloads |
-| `k4` | utility worker | Raspberry Pi 5 8 GB ([board](https://www.amazon.com/dp/B0CK2FCG1K/?ref_=list_c_wl_lv_ov_lig_dp_it)) + [iUniker V2 NVMe base/active cooler](https://www.amazon.com/dp/B0G4H3Q4CS/?ref_=list_c_wl_lv_ov_lig_dp_it) + [Geekworm X1001 M.2 adapter](https://www.amazon.com/dp/B0CPPGGDQT/?ref_=list_c_wl_lv_ov_lig_dp_it) + [fanxiang S500 Pro 256 GB NVMe](https://www.amazon.com/dp/B0B55SWRCY/?ref_=list_c_wl_lv_ov_lig_dp_it); Raspberry Pi OS 64-bit | Handles ARM64 workloads + automation targets |
+| `k4` | utility worker | Raspberry Pi 5 8 GB, M.2 NVMe SSD, Raspberry Pi OS 64-bit | Handles ARM64 workloads |
 
 K3s runs with embedded etcd on `k1–k3`. 
 
@@ -62,7 +62,6 @@ Once Argo is up, install each application defined under `apps/` to roll out indi
 | Item (Amazon link) | Purpose / where it’s used | Price (USD, 2026-02-23) |
 |--------------------|---------------------------|---------------------------|
 | [GMKtec G3S Mini PC](https://www.amazon.com/dp/B0FQT44ZCJ/?ref_=list_c_wl_lv_ov_lig_dp_it) | `k1–k3` control-plane + worker nodes | $199.98 |
-| **Raspberry Pi 5 stack (bundle)** | `k4` ARM64 utility node hardware (board + NVMe storage + hat + enclosure) | $223.36 |
 | &nbsp;&nbsp;• [Raspberry Pi 5 8 GB board](https://www.amazon.com/dp/B0CK2FCG1K/?ref_=list_c_wl_lv_ov_lig_dp_it) | Base SBC | $134.48 |
 | &nbsp;&nbsp;• [iUniker V2 Metal NVMe case + cooler](https://www.amazon.com/dp/B0G4H3Q4CS/?ref_=list_c_wl_lv_ov_lig_dp_it) | Enclosure + active cooling + NVMe mount | $17.99 |
 | &nbsp;&nbsp;• [fanxiang S500 Pro 256 GB NVMe SSD](https://www.amazon.com/dp/B0B55SWRCY/?ref_=list_c_wl_lv_ov_lig_dp_it) | Local NVMe storage | $57.99 |
