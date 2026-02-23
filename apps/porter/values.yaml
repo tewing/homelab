@@ -1,0 +1,137 @@
+openclaw:
+  app-template:
+    configMode: merge
+    namespace: porter
+
+    configMaps:
+      config:
+        enabled: true
+        data:
+          openclaw.json: |
+            {
+              "gateway": {
+                "port": 28789,
+                "mode": "local",
+                "trustedProxies": ["10.0.0.1"]
+              },
+              "browser": {
+                "enabled": true,
+                "defaultProfile": "default",
+                "profiles": {
+                  "default": {
+                    "cdpUrl": "http://localhost:9222",
+                    "color": "#8A2BE2"
+                  }
+                }
+              },
+              "agents": {
+                "defaults": {
+                  "workspace": "/home/node/.openclaw/workspace",
+                  "model": {
+                    "primary": "openai-codex/gpt-5.3-codex"
+                  },
+                  "userTimezone": "UTC",
+                  "timeoutSeconds": 600,
+                  "maxConcurrent": 1
+                },
+                "list": [
+                  {
+                    "id": "porter",
+                    "default": true,
+                    "identity": {
+                      "name": "Porter",
+                      "emoji": "🧳"
+                    }
+                  }
+                ]
+              },
+              "session": {
+                "scope": "per-sender",
+                "store": "/home/node/.openclaw/sessions",
+                "reset": {
+                  "mode": "idle",
+                  "idleMinutes": 120
+                }
+              },
+              "logging": {
+                "level": "info",
+                "consoleLevel": "info",
+                "consoleStyle": "compact",
+                "redactSensitive": "tools"
+              },
+              "tools": {
+                "profile": "full",
+                "web": {
+                  "search": { "enabled": false },
+                  "fetch": { "enabled": true }
+                }
+              }
+            }
+
+    controllers:
+      main:
+        type: deployment
+        replicas: 1
+        containers:
+          main:
+            image:
+              repository: ghcr.io/openclaw/openclaw
+              tag: latest
+              pullPolicy: Always
+            envFrom:
+              - secretRef:
+                  name: porter-openclaw-env-secret
+            env:
+              TZ: America/Los_Angeles
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: "1"
+                memory: 1Gi
+
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+
+    ingress:
+      main:
+        enabled: true
+        className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        hosts:
+          - host: porter.example.com
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+
+    persistence:
+      data:
+        enabled: true
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 10Gi
+        storageClass: longhorn
+        globalMounts:
+          - path: /data
+
+    networkpolicies:
+      main:
+        enabled: false
+
+    openclaw:
+      trustedProxies:
+        - 10.0.0.0/8
+        - 10.42.0.0/16
+        - 192.168.0.0/16
+      llm:
+        provider: openai
+        model: gpt-4o
+      timezone: America/Los_Angeles

@@ -1,0 +1,17 @@
+apiVersion: v2
+name: porter
+description: Secondary OpenClaw instance ("porter") Helm chart wrapper
+version: 0.1.0
+keywords:
+  - openclaw
+  - porter
+  - ai
+  - automation
+home: https://github.com/tewing/homelab
+sources:
+  - https://github.com/openclaw/openclaw
+  - https://github.com/serhanekicii/openclaw-helm
+dependencies:
+  - name: openclaw
+    version: 1.3.19
+    repository: https://serhanekicii.github.io/openclaw-helm
