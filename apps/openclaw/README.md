@@ -21,8 +21,12 @@ kubectl create secret generic openclaw-env-secret \
   --from-literal=OPENCLAW_GATEWAY_TOKEN=zzz111222
 ```
 
-Download the openclaw workspace from the pod
+
+## Download the openclaw workspace from the pod
 ```bash
-   OPENCLAW_POD=$(kubectl get pod -n openclaw -l app.kubernetes.io/name=openclaw -o jsonpath='{.items[0].metadata.name}')
-   kubectl cp -n openclaw   -c main           $OPENCLAW_POD:/home/node/.openclaw ~/openclaw/
+OPENCLAW_POD=$(kubectl get pod -n openclaw -l app.kubernetes.io/name=openclaw -o jsonpath='{.items[0].metadata.name}')
+BACKUP_DIR=~/openclaw/$(date +%Y-%m-%d)
+mkdir -p "$BACKUP_DIR"
+kubectl cp -n openclaw -c main "$OPENCLAW_POD:/home/node/.openclaw" "$BACKUP_DIR/"
 ```
+
