@@ -1,4 +1,4 @@
-# Homelab
+# Homelab 🏡
 
 Infrastructure as Code for my personal homelab running Kubernetes on Proxmox.
 
