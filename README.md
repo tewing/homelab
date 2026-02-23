@@ -15,7 +15,7 @@ Operational notes, manifests, and automation for my physical K3s cluster. Everyt
 | `k1` | Control-plane + worker | [GMKtec G3S Mini PC](https://www.amazon.com/dp/B0FQT44ZCJ?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1), 16GB RAM, 512GB M.2 NVMe SSD, Intel N95, Ubuntu Server 22.04.5 LTS | Runs etcd + system workloads |
 | `k2` | Control-plane + worker | Same spec as `k1` | Adds redundancy for etcd/HA + capacity for general workloads |
 | `k3` | Control-plane + worker | Same spec as `k1` | Adds redundancy for etcd/HA + capacity for general workloads |
-| `k4` | utility worker | Raspberry Pi 5 8 GB w/ 256gb NVMe SSD; runs Raspberry Pi OS 64-bit | Handles ARM64 workloads |
+| `k4` | utility worker | Raspberry Pi 5 8 GB ([board](https://www.amazon.com/dp/B0CK2FCG1K/?ref_=list_c_wl_lv_ov_lig_dp_it)) + [iUniker V2 NVMe base/active cooler](https://www.amazon.com/dp/B0G4H3Q4CS/?ref_=list_c_wl_lv_ov_lig_dp_it) + [Geekworm X1001 M.2 adapter](https://www.amazon.com/dp/B0CPPGGDQT/?ref_=list_c_wl_lv_ov_lig_dp_it) + [fanxiang S500 Pro 256 GB NVMe](https://www.amazon.com/dp/B0B55SWRCY/?ref_=list_c_wl_lv_ov_lig_dp_it); Raspberry Pi OS 64-bit | Handles ARM64 workloads + automation targets |
 
 K3s runs with embedded etcd on `k1–k3`. 
 
@@ -54,25 +54,22 @@ Once Argo is up, install each application defined under `apps/` to roll out indi
 - **Deploy apps** – Add/update values inside `apps/<name>/values.yaml` + README, commit, and let Argo sync.
 - **Secrets** – Store sensitive values as Kubernetes secrets generated out-of-band (see each app README for the exact `kubectl create secret …` commands).
 
-## Hardware references
+## Hardware sourcing, links, and pricing
 
-- Control-plane/workers (`k1–k3`): [GMKtec G3S Mini PC](https://www.amazon.com/dp/B0FQT44ZCJ?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)
-- ARM64 node (`k4`):
-  - [Raspberry Pi 5 Kit](https://www.amazon.com/dp/B0B55SWRCY?ref=ppx_yo2ov_dt_b_fed_asin_title)
-  - [NVMe Base / Active Cooler](https://www.amazon.com/dp/B0CK2FCG1K?ref=ppx_yo2ov_dt_b_fed_asin_title)
-  - [Official USB-C 27W PSU](https://www.amazon.com/dp/B0CPPGGDQT?ref=ppx_yo2ov_dt_b_fed_asin_title)
+- Public wishlist (source of pricing data): <https://www.amazon.com/hz/wishlist/ls/2CXIWUZURGSGO>
+- All prices reflect Amazon listings captured on **2026-02-23** from the exported wishlist PDF Terry shared in Slack.
 
+| Item (Amazon link) | Purpose / where it’s used | Price (USD, 2026-02-23) |
+|--------------------|---------------------------|---------------------------|
+| [GMKtec G3S Mini PC](https://www.amazon.com/dp/B0FQT44ZCJ/?ref_=list_c_wl_lv_ov_lig_dp_it) | `k1–k3` control-plane + worker nodes | $199.98 |
+| [Raspberry Pi 5 8 GB board](https://www.amazon.com/dp/B0CK2FCG1K/?ref_=list_c_wl_lv_ov_lig_dp_it) | `k4` ARM64 utility node | $134.48 |
+| [iUniker V2 Metal NVMe case + cooler](https://www.amazon.com/dp/B0G4H3Q4CS/?ref_=list_c_wl_lv_ov_lig_dp_it) | Pi 5 enclosure with active cooling + NVMe mount | $17.99 |
+| [fanxiang S500 Pro 256 GB NVMe SSD](https://www.amazon.com/dp/B0B55SWRCY/?ref_=list_c_wl_lv_ov_lig_dp_it) | Pi 5 local storage | $57.99 |
+| [Geekworm X1001 Key-M to PCIe adapter](https://www.amazon.com/dp/B0CPPGGDQT/?ref_=list_c_wl_lv_ov_lig_dp_it) | Pi 5 NVMe carrier + hat | $12.90 |
+| [NETGEAR 5-port Gigabit unmanaged switch](https://www.amazon.com/dp/B07PFYM5MZ/?ref_=list_c_wl_lv_ov_lig_dp_it) | Aggregates Pi + mini PCs in the rack | $18.99 |
+| [10Gsupxsel Cat6 Ethernet cable (2 ft)](https://www.amazon.com/dp/B0CQXG1WPC/?ref_=list_c_wl_lv_ov_lig_dp_it) | Short patch leads inside the rack | $14.49 |
 
-## Amazon sourcing + current pricing
-
-- Public wishlist: <https://www.amazon.com/hz/wishlist/ls/2CXIWUZURGSGO>
-
-| Product | Price (USD) | As of |
-|---------|-------------|-------|
-| [GMKtec G3S Mini PC](https://www.amazon.com/dp/B0FQT44ZCJ?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1) | $199.98 | 2026-02-23 |
-| [Raspberry Pi 5 8GB kit](https://www.amazon.com/dp/B0B55SWRCY?ref=ppx_yo2ov_dt_b_fed_asin_title) | $134.48 | 2026-02-23 |
-| [iUniker NVMe Base / Active Cooler](https://www.amazon.com/dp/B0CK2FCG1K?ref=ppx_yo2ov_dt_b_fed_asin_title) | $17.99 | 2026-02-23 |
-| [Official USB-C 27W PSU](https://www.amazon.com/dp/B0CPPGGDQT?ref=ppx_yo2ov_dt_b_fed_asin_title) | $12.90 | 2026-02-23 |
+> ✳︎ Prices above are verbatim from the PDF export of the wishlist and include Amazon’s “as of” timestamp of 2026-02-23. Update this section whenever new sourcing or pricing needs to be tracked.
 
 ## Resources
 
