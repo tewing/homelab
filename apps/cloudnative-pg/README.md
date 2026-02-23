@@ -1,6 +1,6 @@
 # CloudNative-PG
 
-## Created with:
+## Deploy with Argo CD
 
 ```bash
 argocd app create cloudnative-pg \
@@ -12,49 +12,46 @@ argocd app create cloudnative-pg \
     --sync-option ServerSideApply=true
 ```
 
-
-## Start a cluster with:
+## Start a cluster
 
 ```bash
 kubectl apply -f cluster.yaml
 ```
 
-## Find all clusters
+## Inspect clusters
 
 ```bash
 kubectl get cluster -A
+kubectl get cluster <CLUSTERNAME> --watch
 ```
 
-## watch the cluster status:
+Wait for the status to report `Cluster in healthy state` before proceeding.
+
+## Create database credentials
+
+### TeslaMate
 
 ```bash
-kubectl get cluster <CLUSTERNAME> --watch
-# Wait for the status to show "Cluster in healthy state".
-```
-
-## Create teslamate user credentials with:
-
-```bash 
 kubectl create secret generic cluster-postgres-teslamate \
   --namespace postgres \
   --from-literal=username=teslamate \
-  --from-literal=password=zzzzz 
+  --from-literal=password=zzzzz
 ```
 
-## Create keycloak user credentials with:
+### Keycloak
 
-```bash 
+```bash
 kubectl create secret generic cluster-postgres-keycloak \
   --namespace postgres \
   --from-literal=username=keycloak-db-user \
-  --from-literal=password=zzzzz 
+  --from-literal=password=zzzzz
 ```
 
-## Create databases:
+## Create databases
 
 ```bash
-kubectl apply -f db-teslamate.yaml 
-kubectl apply -f db-*.yaml 
+kubectl apply -f db-teslamate.yaml
+kubectl apply -f db-*.yaml
 ```
 
 ## Connect to the database

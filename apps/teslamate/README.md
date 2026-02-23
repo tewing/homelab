@@ -1,6 +1,6 @@
 # TeslaMate
 
-## Created with:
+## Deploy with Argo CD
 
 ```bash
 argocd app create teslamate \
@@ -11,7 +11,9 @@ argocd app create teslamate \
     --sync-option CreateNamespace=true
 ```
 
-## Create database credentials secret
+## Post-install steps
+
+### Create database credentials secret
 
 ```bash
 kubectl create secret generic postgres-credentials \
@@ -22,7 +24,9 @@ kubectl create secret generic postgres-credentials \
   --from-literal=DATABASE_PASS=zzz
 ```
 
-## Create encryption key (for internal storage of Tesla OAuth secret)
+### Create encryption key
+
+Used for storing the Tesla OAuth secret.
 
 ```bash
 kubectl create secret generic encryption-key \
@@ -30,7 +34,7 @@ kubectl create secret generic encryption-key \
   --from-literal=ENCRYPTION_KEY=zzz11122333
 ```
 
-## Retrieve Grafana admin password
+### Retrieve Grafana admin password
 
 ```bash
 kubectl get secret teslamate-grafana -o jsonpath="{.data.admin-password}" | base64 --decode

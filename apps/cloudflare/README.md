@@ -1,6 +1,6 @@
 # Cloudflare Tunnel
 
-## Created with
+## Deploy with Argo CD
 
 ```bash
 argocd app create cloudflare \
@@ -12,13 +12,14 @@ argocd app create cloudflare \
   --sync-option ServerSideApply=true
 ```
 
-## Create the tunnel
+## Post-install steps
 
-Cloudflare → Account home → Tunnels:
+### Create the tunnel
 
+Open Cloudflare → Account home → **Tunnels** and create the tunnel:
 https://dash.cloudflare.com/d634a093d69af40e88d14bfbc799d1c4/tunnels
 
-## Create tunnel secrets
+### Create tunnel secrets
 
 ```bash
 cp ~/.cloudflared/*.json ./credentials.json
@@ -26,14 +27,12 @@ kubectl create secret generic config-json-file-secret -n cloudflare --from-file=
 kubectl create secret generic cert-pem-file-secret -n cloudflare --from-file=~/.cloudflared/cert.pem
 ```
 
-## Verify the tunnel
+### Verify the tunnel
 
-Cloudflare → Account home → Tunnels:
-
+Return to Cloudflare → Account home → **Tunnels** and confirm the connection:
 https://dash.cloudflare.com/d634a093d69af40e88d14bfbc799d1c4/tunnels
 
-## Add DNS CNAME
+### Add DNS CNAME
 
-Create a CNAME for `*.<DOMAIN>` pointing to the tunnel:
-
+Create a `*.<DOMAIN>` CNAME pointing to the tunnel:
 https://dash.cloudflare.com/d634a093d69af40e88d14bfbc799d1c4/te-lab.org/dns/records

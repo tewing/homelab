@@ -1,6 +1,6 @@
-# Keycloak
+# Cert-Manager
 
-## Created with:
+## Deploy with Argo CD
 
 ```bash
 argocd app create cert-manager \
@@ -11,7 +11,9 @@ argocd app create cert-manager \
     --sync-option CreateNamespace=true
 ```
 
-## Configure Cloudflare DNS-01 
+## Post-install steps
+
+### Configure Cloudflare DNS-01
 
 ```bash
 kubectl create secret generic cloudflare-api-token-secret \
@@ -19,7 +21,8 @@ kubectl create secret generic cloudflare-api-token-secret \
   --from-literal=api-token='<TOKEN>'
 ```
 
-## create clusterissuer
+### Create ClusterIssuer
+
 ```bash
 kubectl apply -f clusterissuer.yaml
 ```
