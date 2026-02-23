@@ -1,17 +1,6 @@
 # see https://github.com/serhanekicii/openclaw-helm/blob/main/charts/openclaw/values.yaml
 
 openclaw:
-  # configMode: overwrite
-  # app-template:
-  #   controllers:
-  #     main:
-  #       containers:
-  #         main:
-  #           envFrom:
-  #             - secretRef:
-  #                 name: openclaw-env-secret
-  # generated with Claude.ai
-
   # ----------------------------------------------------------
   # Config mode
   #   merge     (default) — runtime UI changes survive restarts
@@ -19,7 +8,7 @@ openclaw:
   # ----------------------------------------------------------
 
   app-template:
-    configMode: overwrite
+    configMode: merge
     configMaps:
       config:
         # @schema type:boolean;default:true
@@ -59,7 +48,7 @@ openclaw:
                 "defaults": {
                   "workspace": "/home/node/.openclaw/workspace",
                   "model": {
-                    // Uses ANTHROPIC_API_KEY from environment
+                    // Uses OPENAI_API_KEY from environment
                     "primary": "openai-codex/gpt-5.3-codex"
                   },
                   "userTimezone": "UTC",
@@ -154,60 +143,23 @@ openclaw:
             env:
               TZ: America/Los_Angeles
 
-    #         # ------------------------------------------------
-    #         # Relaxed resource limits for development
-    #         # ------------------------------------------------
-    #         resources:
-    #           requests:
-    #             cpu: 100m
-    #             memory: 256Mi
-    #           limits:
-    #             cpu: "1"
-    #             memory: 1Gi
+            # ------------------------------------------------
+            # Relaxed resource limits for development
+            # ------------------------------------------------
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: "1"
+                memory: 1Gi
 
-    #         probes:
-    #           liveness:
-    #             enabled: true
-    #             custom: true
-    #             spec:
-    #               httpGet:
-    #                 path: /
-    #                 port: 18789
-    #               initialDelaySeconds: 30
-    #               periodSeconds: 20
-    #               failureThreshold: 5
-    #           readiness:
-    #             enabled: true
-    #             custom: true
-    #             spec:
-    #               httpGet:
-    #                 path: /
-    #                 port: 18789
-    #               initialDelaySeconds: 15
-    #               periodSeconds: 10
-
-    # # --------------------------------------------------------
-    # # Service
-    # # --------------------------------------------------------
-    # service:
-    #   main:
-    #     controller: main
-    #     ports:
-    #       http:
-    #         port: 18789
-
-    # --------------------------------------------------------
-    # Ingress
-    # Using ingress-nginx on bare metal. For bare-metal
-    # clusters, MetalLB or NodePort is typically used to
-    # expose the ingress controller.
-    # --------------------------------------------------------
     ingress:
       main:
         enabled: true
         className: traefik
         annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure # change to websecure for HTTPS
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure # change to web for HTTP
           # Uncomment below for TLS with cert-manager:
           # cert-manager.io/cluster-issuer: letsencrypt-staging
           # traefik.ingress.kubernetes.io/router.entrypoints: websecure
