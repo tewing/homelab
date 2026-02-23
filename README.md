@@ -62,6 +62,18 @@ Once Argo is up, install each application defined under `apps/` to roll out indi
   - [NVMe Base / Active Cooler](https://www.amazon.com/dp/B0CK2FCG1K?ref=ppx_yo2ov_dt_b_fed_asin_title)
   - [Official USB-C 27W PSU](https://www.amazon.com/dp/B0CPPGGDQT?ref=ppx_yo2ov_dt_b_fed_asin_title)
 
+
+## Amazon sourcing + current pricing
+
+- Public wishlist: <https://www.amazon.com/hz/wishlist/ls/2CXIWUZURGSGO>
+
+| Product | Price (USD) | As of |
+|---------|-------------|-------|
+| [GMKtec G3S Mini PC](https://www.amazon.com/dp/B0FQT44ZCJ?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1) | $199.98 | 2026-02-23 |
+| [Raspberry Pi 5 8GB kit](https://www.amazon.com/dp/B0B55SWRCY?ref=ppx_yo2ov_dt_b_fed_asin_title) | $134.48 | 2026-02-23 |
+| [iUniker NVMe Base / Active Cooler](https://www.amazon.com/dp/B0CK2FCG1K?ref=ppx_yo2ov_dt_b_fed_asin_title) | $17.99 | 2026-02-23 |
+| [Official USB-C 27W PSU](https://www.amazon.com/dp/B0CPPGGDQT?ref=ppx_yo2ov_dt_b_fed_asin_title) | $12.90 | 2026-02-23 |
+
 ## Resources
 
 - [K3s documentation](https://docs.k3s.io/)
