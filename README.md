@@ -1,6 +1,6 @@
 # Homelab 🏡
 
-Operational notes, manifests, and automation for my physical K3s cluster. Everything here reflects the way I run the cluster today: bare-metal nodes, GitOps with Argo CD, and a small Raspberry Pi 5 utility box.
+Operational notes, manifests, and automation for my physical K3s cluster. Everything here reflects the way I run the cluster today: bare-metal nodes, GitOps with Argo CD.  3 X86 nodes, 1 arm64 node.
 
 ## Overview
 
