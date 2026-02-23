@@ -2,6 +2,8 @@
 
 Infrastructure as Code for my personal homelab running Kubernetes on Proxmox.
 
+
+
 ## Overview
 
 This repository contains Terraform/Terragrunt configurations to provision and manage K3s Kubernetes clusters on a Proxmox virtualization cluster. It supports multiple deployment patterns from simple single-node clusters to advanced multi-nodepool configurations with custom taints and labels.
