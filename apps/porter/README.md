@@ -11,20 +11,17 @@ homelab-specific values for:
 
 ## Prerequisites
 
-1. **Namespace** (created automatically by Argo CD/App Template when needed).
-2. **Secret with runtime tokens** – run once before the app syncs:
+1. **Secret with runtime tokens** – run once before the app syncs:
 
    ```bash
    kubectl create secret generic porter-openclaw-env-secret \
      -n openclaw \
+     --from-literal=ANTHROPIC_API_KEY=<redacted> \
      --from-literal=OPENAI_API_KEY=<redacted> \
      --from-literal=OPENCLAW_GATEWAY_TOKEN=<redacted> \
      --from-literal=SLACK_BOT_TOKEN=<optional> \
      --from-literal=SLACK_APP_TOKEN=<optional>
    ```
-
-3. **Ingress / DNS** – point `porter.example.com` (or whatever host you set in
-   `values.yaml`) at your cluster’s ingress controller.
 
 ## Deploying via Argo CD
 
