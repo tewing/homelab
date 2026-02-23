@@ -1,100 +1,71 @@
 # Homelab 🏡
 
-Infrastructure as Code for my personal homelab running Kubernetes on Proxmox.
-
-
+Operational notes, manifests, and automation for my physical K3s cluster. Everything here reflects the way I run the cluster today: bare-metal nodes, GitOps with Argo CD, and a small Raspberry Pi 5 utility box.
 
 ## Overview
 
-This repository contains Terraform/Terragrunt configurations to provision and manage K3s Kubernetes clusters on a Proxmox virtualization cluster. It supports multiple deployment patterns from simple single-node clusters to advanced multi-nodepool configurations with custom taints and labels.
+- **K3s everywhere** – Lightweight Kubernetes with embedded etcd across all control-plane nodes.
+- **GitOps-first** – Apps (and Argo itself) are expressed as Helm values / manifests inside this repo, so the cluster state is driven entirely from Git.
+- **Homelab-friendly hardware** – Low-power mini PCs for the control plane plus a Pi 5 for edge / automation work.
 
-## Features
+## Cluster topology
 
-- **Automated K3s Deployment** — Spin up production-ready Kubernetes clusters with a single command
-- **Multiple Cluster Types** — Support for pure K3s, Rancher-managed, and general-purpose VMs
-- **Advanced Node Pools** — Configure multiple agent pools with different resources, labels, and taints
-- **Secrets Management** — SOPS + GPG encryption for storing sensitive values in Git
-- **Cloud-Init Integration** — Ubuntu templates with QEMU guest agent for seamless provisioning
-- **High Availability** — Multi-node control plane support for resilient clusters
+| Node | Role(s) | Hardware & OS | Notes |
+|------|---------|---------------|-------|
+| `k1` | Control-plane + worker | [Beelink SER6 Pro Mini PC](https://www.amazon.com/dp/B0FQT44ZCJ?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1) — AMD Ryzen 7 7735HS, 32 GB RAM, NVMe SSD, Ubuntu Server 24.04 | Runs etcd + system workloads |
+| `k2` | Control-plane + worker | Same spec as `k1` | Adds redundancy for etcd/HA + general workloads |
+| `k3` | Control-plane + worker | Same spec as `k1` | Keeps quorum even if one node is down |
+| `k4` | Edge/utility worker | Raspberry Pi 5 8 GB w/ [passive case](https://www.amazon.com/dp/B0B55SWRCY?ref=ppx_yo2ov_dt_b_fed_asin_title), [NVMe hat](https://www.amazon.com/dp/B0CK2FCG1K?ref=ppx_yo2ov_dt_b_fed_asin_title), [PSU kit](https://www.amazon.com/dp/B0CPPGGDQT?ref=ppx_yo2ov_dt_b_fed_asin_title); runs Raspberry Pi OS 64-bit | Handles lightweight services, out-of-band jobs, and serves as the cluster’s out-of-band node |
 
-## Architecture
+K3s runs with embedded etcd on `k1–k3`. Worker taints/labels are managed via the manifests under `k3s/`.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     Proxmox Cluster                         │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐         │
-│  │   prox1     │  │   prox2     │  │   prox3     │         │
-│  │  ┌───────┐  │  │  ┌───────┐  │  │  ┌───────┐  │         │
-│  │  │ CP-1  │  │  │  │ CP-2  │  │  │  │ CP-3  │  │         │
-│  │  └───────┘  │  │  └───────┘  │  │  └───────┘  │         │
-│  │  ┌───────┐  │  │  ┌───────┐  │  │  ┌───────┐  │         │
-│  │  │Agent-1│  │  │  │Agent-2│  │  │  │Agent-3│  │         │
-│  │  └───────┘  │  │  └───────┘  │  │  └───────┘  │         │
-│  └─────────────┘  └─────────────┘  └─────────────┘         │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                    Terraform / Terragrunt
-```
+## GitOps + Argo CD
 
-## Tech Stack
-
-| Component | Purpose |
-|-----------|---------|
-| [Proxmox VE](https://www.proxmox.com/) | Hypervisor / Virtualization platform |
-| [Terraform](https://www.terraform.io/) | Infrastructure as Code |
-| [Terragrunt](https://terragrunt.gruntwork.io/) | Terraform wrapper for DRY configurations |
-| [K3s](https://k3s.io/) | Lightweight Kubernetes distribution |
-| [SOPS](https://github.com/mozilla/sops) | Secrets encryption |
-| [Ubuntu Cloud Images](https://cloud-images.ubuntu.com/) | VM base templates |
-
-## Quick Start
-
-### Prerequisites
-
-- Proxmox VE cluster with API access
-- Terraform >= 0.14
-- Terragrunt
-- SOPS + GPG
-
-### Deployment
+Argo CD is installed directly in-cluster using the Helm values found at [`k3s/argo/values.yaml`](k3s/argo/values.yaml):
 
 ```bash
-# Clone the repository
-git clone --recurse-submodules <repo-url>
-cd homelab/proxmox-iac
-
-# Create the proxmox user and api key 
-ssh -i ~/.ssh/proxmox-1 root@proxmox-1 pveum user add apiuser@pam
-ssh -i ~/.ssh/proxmox-1 root@proxmox-1 pveum user token add root@pam terragrunt
-ssh -i ~/.ssh/proxmox-1 root@proxmox-1 pveum aclmod / -token apiuser@pam\!terragrunt -role Administrator
-
-# Configure your credentials (see detailed docs)
-cp clusters/k3s-example clusters/my-cluster
-cd clusters/my-cluster
-
-# Edit configuration
-vim terragrunt.hcl
-
-# Deploy
-terragrunt plan
-terragrunt apply
+helm upgrade --install argocd argo/argo-cd \
+  --namespace argocd \
+  --create-namespace \
+  -f k3s/argo/values.yaml
 ```
 
-See the **[detailed documentation](proxmox-iac/README.md)** for complete setup instructions including:
-- GPG key creation
-- Ubuntu cloud-init template setup
-- SOPS encryption configuration
-- Advanced cluster configurations
+Once Argo is up, sync the root application(s) defined under `apps/` to roll out individual services (cert-manager, Cloudflare Tunnel, TeslaMate, etc.).
 
+## Repository layout
 
-## Hardware
+```
+.
+├── k3s/
+│   ├── argo/             # Helm values + bootstrap manifests for Argo CD
+│   └── cluster/          # Base manifests, node labels, storage classes, etc.
+├── apps/
+│   ├── <app>/README.md   # App-specific deploy/runbooks
+│   └── <app>/values.yaml # Helm overrides consumed by Argo
+├── scripts/              # Helper scripts (maintenance, backups, etc.)
+└── docs/                 # Deep dives, troubleshooting notes
+```
 
-See my [Amazon shopping list](https://www.amazon.com/hz/wishlist/ls/2CXIWUZURGSGO?ref_=wl_share) for the components used in this homelab.
+## Operating the cluster
+
+- **Bootstrap** – Bring up K3s on `k1–k3` (see `k3s/cluster/` for config) and join `k4` as a worker.
+- **Install Argo CD** – Use the command above; Argo will continuously reconcile against this repository.
+- **Deploy apps** – Add/update values inside `apps/<name>/values.yaml` + README, commit, and let Argo sync.
+- **Secrets** – Store sensitive values as Kubernetes secrets generated out-of-band (see each app README for the exact `kubectl create secret …` commands).
+
+## Hardware references
+
+- Control-plane/workers (`k1–k3`): [Beelink SER6 Pro Mini PC](https://www.amazon.com/dp/B0FQT44ZCJ?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)
+- Utility node (`k4`):
+  - [Raspberry Pi 5 Kit](https://www.amazon.com/dp/B0B55SWRCY?ref=ppx_yo2ov_dt_b_fed_asin_title)
+  - [NVMe Base / Active Cooler](https://www.amazon.com/dp/B0CK2FCG1K?ref=ppx_yo2ov_dt_b_fed_asin_title)
+  - [Official USB-C 27W PSU](https://www.amazon.com/dp/B0CPPGGDQT?ref=ppx_yo2ov_dt_b_fed_asin_title)
 
 ## Resources
 
-- [Set up a Kubernetes cluster with Proxmox and K3s](https://dev.to/mihailtd/set-up-a-kubernetes-cluster-in-under-5-minutes-with-proxmox-and-k3s-2987) — Original guide that inspired this project
+- [K3s documentation](https://docs.k3s.io/)
+- [Argo CD documentation](https://argo-cd.readthedocs.io/en/stable/)
 
-## License
+---
 
 See [LICENSE](LICENSE) for details.
