@@ -1,32 +1,31 @@
 # Keycloak
 
-## Created with:
+## Deploy with Argo CD
 
 ```bash
-argocd app create keycloak \
+APP=keycloak
+argocd app create "$APP" \
     --repo https://github.com/tewing/homelab \
-    --path apps/keycloak \
+    --path apps/$APP \
     --dest-server https://kubernetes.default.svc \
-    --dest-namespace auth \
+    --dest-namespace $APP \
     --sync-option CreateNamespace=true
 ```
 
-## Create database credentials secret
+## Post-install steps
+
+### Create database credentials secret
 
 ```bash
 kubectl create secret generic keycloak-db-credentials \
+  --namespace auth \
   --from-literal=db-password='zzzzzzz' \
   --from-literal=db-username=keycloak-db-user
 ```
 
-## retrieve admin password
+### Retrieve admin password
 
 ```bash
 kubectl get secret -n auth keycloak \
-   -o jsonpath="{.data.admin-password}" | base64 -d; echo  
+   -o jsonpath="{.data.admin-password}" | base64 -d; echo
 ```
-
-
-
-
-

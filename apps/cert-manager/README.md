@@ -1,17 +1,20 @@
-# Keycloak
+# Cert-Manager
 
-## Created with:
+## Deploy with Argo CD
 
 ```bash
-argocd app create cert-manager \
+APP=cert-manager
+argocd app create "$APP" \
     --repo https://github.com/tewing/homelab \
-    --path apps/cert-manager \
+    --path apps/$APP \
     --dest-server https://kubernetes.default.svc \
-    --dest-namespace cert-manager \
+    --dest-namespace $APP \
     --sync-option CreateNamespace=true
 ```
 
-## Configure Cloudflare DNS-01 
+## Post-install steps
+
+### Configure Cloudflare DNS-01
 
 ```bash
 kubectl create secret generic cloudflare-api-token-secret \
@@ -19,7 +22,8 @@ kubectl create secret generic cloudflare-api-token-secret \
   --from-literal=api-token='<TOKEN>'
 ```
 
-## create clusterissuer
+### Create ClusterIssuer
+
 ```bash
 kubectl apply -f clusterissuer.yaml
 ```

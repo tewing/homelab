@@ -1,17 +1,18 @@
-# Openclaw
+# OpenClaw
 
-## Created with:
+## Deploy with Argo CD
 
 ```bash
-argocd app create openclaw \
+APP=openclaw
+argocd app create "$APP" \
     --repo https://github.com/tewing/homelab \
-    --path apps/openclaw \
+    --path apps/$APP \
     --dest-server https://kubernetes.default.svc \
-    --dest-namespace openclaw \
+    --dest-namespace $APP \
     --sync-option CreateNamespace=true
 ```
 
-## Create  secret
+## Configure secrets
 
 ```bash
 kubectl create secret generic openclaw-env-secret \
@@ -25,6 +26,3 @@ Download the openclaw workspace from the pod
    OPENCLAW_POD=$(kubectl get pod -n openclaw -l app.kubernetes.io/name=openclaw -o jsonpath='{.items[0].metadata.name}')
    kubectl cp -n openclaw   -c main           $OPENCLAW_POD:/home/node/.openclaw ~/openclaw/
 ```
-
-
-
