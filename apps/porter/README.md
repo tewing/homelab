@@ -1,4 +1,4 @@
-# Porter OpenClaw instance
+# Porter OpenClaw instance 🤖
 
 This app deploys an OpenClaw instance (nicknamed **Porter**) to run an
 additional OpenClaw installation. It uses the upstream
