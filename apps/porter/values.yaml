@@ -28,7 +28,7 @@ openclaw:
                 "defaults": {
                   "workspace": "/home/node/.openclaw/workspace",
                   "model": {
-                    "primary": "openai-codex/gpt-5.3-codex"
+                    "primary": "anthropic/claude-opus-4-5"
                   },
                   "userTimezone": "UTC",
                   "timeoutSeconds": 600,
@@ -132,6 +132,6 @@ openclaw:
         - 10.42.0.0/16
         - 192.168.0.0/16
       llm:
-        provider: openai
-        model: gpt-4o
+        provider: anthropic
+        model: opus-4.5
       timezone: America/Los_Angeles
