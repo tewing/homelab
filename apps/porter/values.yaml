@@ -1,7 +1,7 @@
 openclaw:
   app-template:
     configMode: merge
-    namespace: porter
+    namespace: openclaw
 
     configMaps:
       config:
@@ -40,7 +40,7 @@ openclaw:
                     "default": true,
                     "identity": {
                       "name": "Porter",
-                      "emoji": "🧳"
+                      "emoji": "🤖"
                     }
                   }
                 ]

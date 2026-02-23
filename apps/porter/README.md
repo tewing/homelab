@@ -1,13 +1,12 @@
 # Porter OpenClaw instance
 
-This app deploys a second OpenClaw stack (nicknamed **Porter**) so we can run an
-additional agent alongside the primary installation. It reuses the upstream
-[`openclaw` Helm chart](https://github.com/serhanekicii/openclaw-helm) but ships
-homelab-specific defaults for:
+This app deploys an OpenClaw instance (nicknamed **Porter**) to run an
+additional OpenClaw installation. It uses the upstream
+[`openclaw` Helm chart](https://github.com/serhanekicii/openclaw-helm) with
+homelab-specific values for:
 
-- a dedicated namespace: `porter`
 - its own environment Secret (`porter-openclaw-env-secret`)
-- unique ingress host (`porter.example.com` – update for your DNS)
+- unique ingress host (`porter.example.com`)
 - identity tweaks inside `openclaw.json` so sessions clearly appear as Porter
 
 ## Prerequisites
@@ -17,7 +16,7 @@ homelab-specific defaults for:
 
    ```bash
    kubectl create secret generic porter-openclaw-env-secret \
-     -n porter \
+     -n openclaw \
      --from-literal=OPENAI_API_KEY=<redacted> \
      --from-literal=OPENCLAW_GATEWAY_TOKEN=<redacted> \
      --from-literal=SLACK_BOT_TOKEN=<optional> \
@@ -29,14 +28,16 @@ homelab-specific defaults for:
 
 ## Deploying via Argo CD
 
-Add `apps/porter` to Argo (following the same pattern as other apps) or install
-manually for testing:
+Add `apps/porter` to Argo:
 
 ```bash
-helm dependency update apps/porter
-helm upgrade --install porter apps/porter \
-  -n porter \
-  --create-namespace
+APP=porter
+argocd app create "$APP" \
+    --repo https://github.com/tewing/homelab \
+    --path apps/$APP \
+    --dest-server https://kubernetes.default.svc \
+    --dest-namespace openclaw \
+    --sync-option CreateNamespace=true
 ```
 
 ## Configuration
