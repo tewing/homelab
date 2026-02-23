@@ -62,10 +62,10 @@ Once Argo is up, install each application defined under `apps/` to roll out indi
 | Item (Amazon link) | Purpose / where it’s used | Price (USD, 2026-02-23) |
 |--------------------|---------------------------|---------------------------|
 | [GMKtec G3S Mini PC](https://www.amazon.com/dp/B0FQT44ZCJ/?ref_=list_c_wl_lv_ov_lig_dp_it) | `k1–k3` control-plane + worker nodes | $199.98 |
-| &nbsp;&nbsp;• [Raspberry Pi 5 8 GB board](https://www.amazon.com/dp/B0CK2FCG1K/?ref_=list_c_wl_lv_ov_lig_dp_it) | Base SBC | $134.48 |
-| &nbsp;&nbsp;• [iUniker V2 Metal NVMe case + cooler](https://www.amazon.com/dp/B0G4H3Q4CS/?ref_=list_c_wl_lv_ov_lig_dp_it) | Enclosure + active cooling + NVMe mount | $17.99 |
-| &nbsp;&nbsp;• [fanxiang S500 Pro 256 GB NVMe SSD](https://www.amazon.com/dp/B0B55SWRCY/?ref_=list_c_wl_lv_ov_lig_dp_it) | Local NVMe storage | $57.99 |
-| &nbsp;&nbsp;• [Geekworm X1001 Key-M to PCIe adapter](https://www.amazon.com/dp/B0CPPGGDQT/?ref_=list_c_wl_lv_ov_lig_dp_it) | NVMe carrier + hat | $12.90 |
+| [Raspberry Pi 5 8 GB board](https://www.amazon.com/dp/B0CK2FCG1K/?ref_=list_c_wl_lv_ov_lig_dp_it) | Base SBC | $134.48 |
+| [iUniker V2 Metal NVMe case + cooler](https://www.amazon.com/dp/B0G4H3Q4CS/?ref_=list_c_wl_lv_ov_lig_dp_it) | Enclosure + active cooling + NVMe mount | $17.99 |
+| [fanxiang S500 Pro 256 GB NVMe SSD](https://www.amazon.com/dp/B0B55SWRCY/?ref_=list_c_wl_lv_ov_lig_dp_it) | Local NVMe storage | $57.99 |
+| [Geekworm X1001 Key-M to PCIe adapter](https://www.amazon.com/dp/B0CPPGGDQT/?ref_=list_c_wl_lv_ov_lig_dp_it) | NVMe carrier + hat | $12.90 |
 | [NETGEAR 5-port Gigabit unmanaged switch](https://www.amazon.com/dp/B07PFYM5MZ/?ref_=list_c_wl_lv_ov_lig_dp_it) | Aggregates Pi + mini PCs in the rack | $18.99 |
 | [10Gsupxsel Cat6 Ethernet cable (2 ft)](https://www.amazon.com/dp/B0CQXG1WPC/?ref_=list_c_wl_lv_ov_lig_dp_it) | Short patch leads inside the rack | $14.49 |
 
