@@ -3,13 +3,14 @@
 ## Deploy with Argo CD
 
 ```bash
-argocd app create cloudflare \
-  --repo https://github.com/tewing/homelab \
-  --path apps/cloudflare \
-  --dest-server https://kubernetes.default.svc \
-  --dest-namespace cloudflare \
-  --sync-option CreateNamespace=true \
-  --sync-option ServerSideApply=true
+APP=cloudflare
+argocd app create "$APP" \
+    --repo https://github.com/tewing/homelab \
+    --path apps/$APP \
+    --dest-server https://kubernetes.default.svc \
+    --dest-namespace $APP \
+    --sync-option CreateNamespace=true \
+    --sync-option ServerSideApply=true
 ```
 
 ## Post-install steps

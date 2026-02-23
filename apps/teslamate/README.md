@@ -3,11 +3,12 @@
 ## Deploy with Argo CD
 
 ```bash
-argocd app create teslamate \
+APP=teslamate
+argocd app create "$APP" \
     --repo https://github.com/tewing/homelab \
-    --path apps/teslamate \
+    --path apps/$APP \
     --dest-server https://kubernetes.default.svc \
-    --dest-namespace teslamate \
+    --dest-namespace $APP \
     --sync-option CreateNamespace=true
 ```
 

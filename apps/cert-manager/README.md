@@ -3,11 +3,12 @@
 ## Deploy with Argo CD
 
 ```bash
-argocd app create cert-manager \
+APP=cert-manager
+argocd app create "$APP" \
     --repo https://github.com/tewing/homelab \
-    --path apps/cert-manager \
+    --path apps/$APP \
     --dest-server https://kubernetes.default.svc \
-    --dest-namespace cert-manager \
+    --dest-namespace $APP \
     --sync-option CreateNamespace=true
 ```
 

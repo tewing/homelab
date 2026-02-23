@@ -3,11 +3,12 @@
 ## Deploy with Argo CD
 
 ```bash
-argocd app create openclaw \
+APP=openclaw
+argocd app create "$APP" \
     --repo https://github.com/tewing/homelab \
-    --path apps/openclaw \
+    --path apps/$APP \
     --dest-server https://kubernetes.default.svc \
-    --dest-namespace openclaw \
+    --dest-namespace $APP \
     --sync-option CreateNamespace=true
 ```
 

@@ -3,11 +3,12 @@
 ## Deploy with Argo CD
 
 ```bash
-argocd app create cloudnative-pg \
+APP=cloudnative-pg
+argocd app create "$APP" \
     --repo https://github.com/tewing/homelab \
-    --path apps/cloudnative-pg \
+    --path apps/$APP \
     --dest-server https://kubernetes.default.svc \
-    --dest-namespace postgres \
+    --dest-namespace $APP \
     --sync-option CreateNamespace=true \
     --sync-option ServerSideApply=true
 ```
