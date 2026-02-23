@@ -12,12 +12,12 @@ Operational notes, manifests, and automation for my physical K3s cluster. Everyt
 
 | Node | Role(s) | Hardware & OS | Notes |
 |------|---------|---------------|-------|
-| `k1` | Control-plane + worker | [Beelink SER6 Pro Mini PC](https://www.amazon.com/dp/B0FQT44ZCJ?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1) — AMD Ryzen 7 7735HS, 32 GB RAM, NVMe SSD, Ubuntu Server 24.04 | Runs etcd + system workloads |
-| `k2` | Control-plane + worker | Same spec as `k1` | Adds redundancy for etcd/HA + general workloads |
-| `k3` | Control-plane + worker | Same spec as `k1` | Keeps quorum even if one node is down |
-| `k4` | Edge/utility worker | Raspberry Pi 5 8 GB w/ [passive case](https://www.amazon.com/dp/B0B55SWRCY?ref=ppx_yo2ov_dt_b_fed_asin_title), [NVMe hat](https://www.amazon.com/dp/B0CK2FCG1K?ref=ppx_yo2ov_dt_b_fed_asin_title), [PSU kit](https://www.amazon.com/dp/B0CPPGGDQT?ref=ppx_yo2ov_dt_b_fed_asin_title); runs Raspberry Pi OS 64-bit | Handles lightweight services, out-of-band jobs, and serves as the cluster’s out-of-band node |
+| `k1` | Control-plane + worker | [GMKtec G3S Mini PC](https://www.amazon.com/dp/B0FQT44ZCJ?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1), 16GB RAM, 512GB M.2 NVMe SSD, Intel N95, Ubuntu Server 22.04.5 LTS | Runs etcd + system workloads |
+| `k2` | Control-plane + worker | Same spec as `k1` | Adds redundancy for etcd/HA + capacity for general workloads |
+| `k3` | Control-plane + worker | Same spec as `k1` | Adds redundancy for etcd/HA + capacity for general workloads |
+| `k4` | utility worker | Raspberry Pi 5 8 GB w/ 256gb NVMe SSD; runs Raspberry Pi OS 64-bit | Handles ARM64 workloads |
 
-K3s runs with embedded etcd on `k1–k3`. Worker taints/labels are managed via the manifests under `k3s/`.
+K3s runs with embedded etcd on `k1–k3`. 
 
 ## GitOps + Argo CD
 
@@ -30,7 +30,7 @@ helm upgrade --install argocd argo/argo-cd \
   -f k3s/argo/values.yaml
 ```
 
-Once Argo is up, sync the root application(s) defined under `apps/` to roll out individual services (cert-manager, Cloudflare Tunnel, TeslaMate, etc.).
+Once Argo is up, install each application defined under `apps/` to roll out individual services (cert-manager, Cloudflare Tunnel, TeslaMate, etc.). See the README.md file in each app for detailed deployment instructions.
 
 ## Repository layout
 
@@ -41,6 +41,7 @@ Once Argo is up, sync the root application(s) defined under `apps/` to roll out 
 │   └── cluster/          # Base manifests, node labels, storage classes, etc.
 ├── apps/
 │   ├── <app>/README.md   # App-specific deploy/runbooks
+│   ├── <app>/Chart.yaml  # Argo helm deployment instructions
 │   └── <app>/values.yaml # Helm overrides consumed by Argo
 ├── scripts/              # Helper scripts (maintenance, backups, etc.)
 └── docs/                 # Deep dives, troubleshooting notes
@@ -55,8 +56,8 @@ Once Argo is up, sync the root application(s) defined under `apps/` to roll out 
 
 ## Hardware references
 
-- Control-plane/workers (`k1–k3`): [Beelink SER6 Pro Mini PC](https://www.amazon.com/dp/B0FQT44ZCJ?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)
-- Utility node (`k4`):
+- Control-plane/workers (`k1–k3`): [GMKtec G3S Mini PC](https://www.amazon.com/dp/B0FQT44ZCJ?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)
+- ARM64 node (`k4`):
   - [Raspberry Pi 5 Kit](https://www.amazon.com/dp/B0B55SWRCY?ref=ppx_yo2ov_dt_b_fed_asin_title)
   - [NVMe Base / Active Cooler](https://www.amazon.com/dp/B0CK2FCG1K?ref=ppx_yo2ov_dt_b_fed_asin_title)
   - [Official USB-C 27W PSU](https://www.amazon.com/dp/B0CPPGGDQT?ref=ppx_yo2ov_dt_b_fed_asin_title)
