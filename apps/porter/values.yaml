@@ -1,34 +1,55 @@
+# see https://github.com/serhanekicii/openclaw-helm/blob/main/charts/openclaw/values.yaml
+
 openclaw:
+  # ----------------------------------------------------------
+  # Config mode
+  #   merge     (default) — runtime UI changes survive restarts
+  #   overwrite — strict GitOps; config replaced on every start
+  # ----------------------------------------------------------
+
   app-template:
     configMode: merge
-    namespace: openclaw
-
     configMaps:
       config:
+        # @schema type:boolean;default:true
         enabled: true
         data:
+          # OpenClaw configuration - JSON5 format
+          # Sensitive values use ${ENV_VAR} substitution from environment secret
+          # @schema type:string
           openclaw.json: |
             {
+              // Gateway configuration
               "gateway": {
-                "port": 28789,
+                "port": 18789,
                 "mode": "local",
+              
+                // IMPORTANT: trustedProxies uses exact IP matching only
+                // - CIDR notation is NOT supported - list each proxy IP individually
+                // - IPv6 exact addresses may work but are untested
+                // - Recommend single-stack IPv4 deployments for simplicity
                 "trustedProxies": ["10.0.0.1"]
               },
+
+              // Browser configuration (Chromium sidecar)
               "browser": {
                 "enabled": true,
                 "defaultProfile": "default",
                 "profiles": {
                   "default": {
                     "cdpUrl": "http://localhost:9222",
-                    "color": "#8A2BE2"
+                    "color": "#4285F4"
                   }
                 }
               },
+
+              // Agent configuration
               "agents": {
                 "defaults": {
                   "workspace": "/home/node/.openclaw/workspace",
                   "model": {
-                    "primary": "anthropic/claude-opus-4-5"
+                    // Uses OPENAI_API_KEY from environment
+                    "primary": "openai-codex/gpt-5.3-codex"
                   },
                   "userTimezone": "UTC",
                   "timeoutSeconds": 600,
@@ -36,7 +57,7 @@ openclaw:
                 },
                 "list": [
                   {
-                    "id": "porter",
+                    "id": "main",
                     "default": true,
                     "identity": {
                       "name": "Porter",
@@ -45,93 +66,182 @@ openclaw:
                   }
                 ]
               },
+
+              // Session management
               "session": {
                 "scope": "per-sender",
                 "store": "/home/node/.openclaw/sessions",
                 "reset": {
                   "mode": "idle",
-                  "idleMinutes": 120
+                  "idleMinutes": 60
                 }
               },
+
+              // Logging
               "logging": {
                 "level": "info",
                 "consoleLevel": "info",
                 "consoleStyle": "compact",
                 "redactSensitive": "tools"
               },
+
+              // Tools configuration
               "tools": {
                 "profile": "full",
                 "web": {
-                  "search": { "enabled": false },
-                  "fetch": { "enabled": true }
+                  "search": {
+                    "enabled": false
+                  },
+                  "fetch": {
+                    "enabled": true
+                  }
                 }
               }
-            }
 
+              // Channel configuration can be added here:
+              // "channels": {
+              //   "telegram": {
+              //     "botToken": "${TELEGRAM_BOT_TOKEN}",
+              //     "enabled": true
+              //   },
+              //   "discord": {
+              //     "token": "${DISCORD_BOT_TOKEN}"
+              //   },
+              //   "slack": {
+              //     "botToken": "${SLACK_BOT_TOKEN}",
+              //     "appToken": "${SLACK_APP_TOKEN}"
+              //   }
+              // }
+            }
+    # --------------------------------------------------------
+    # Main controller / deployment
+    # --------------------------------------------------------
     controllers:
       main:
         type: deployment
-        replicas: 1
+        replicas: 1 # OpenClaw cannot scale horizontally
+
         containers:
           main:
             image:
               repository: ghcr.io/openclaw/openclaw
               tag: latest
-              pullPolicy: Always
+              pullPolicy: Always # dev: always pull latest
+
+            # ------------------------------------------------
+            # Create this Secret before installing:
+            #
+            #   kubectl create secret generic openclaw-env-secret \
+            #     -n openclaw \
+            #     --from-literal=OPENAI_API_KEY=sk-xxx \
+            #     --from-literal=OPENCLAW_GATEWAY_TOKEN=your-token
+            # ------------------------------------------------
             envFrom:
               - secretRef:
-                  name: porter-openclaw-env-secret
+                  name: openclaw-env-secret
+
             env:
               TZ: America/Los_Angeles
-            # resources:
-            #   requests:
-            #     cpu: 100m
-            #     memory: 256Mi
-            #   limits:
-            #     cpu: "1"
-            #     memory: 1Gi
 
-    service:
-      main:
-        ports:
-          http:
-            port: 8080
+            # ------------------------------------------------
+            # Relaxed resource limits for development
+            # ------------------------------------------------
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: "1"
+                memory: 1Gi
 
     ingress:
       main:
         enabled: true
         className: traefik
         annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure # change to web for HTTP
+          # Uncomment below for TLS with cert-manager:
+          # cert-manager.io/cluster-issuer: letsencrypt-staging
+          # traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          # traefik.ingress.kubernetes.io/router.tls: "true"
         hosts:
-          - host: porter.example.com
+          - host: openclaw.example.com # ← add to /etc/hosts or local DNS
             paths:
               - path: /
                 pathType: Prefix
                 service:
                   identifier: main
                   port: http
+        # tls:                    # uncomment to enable TLS
+        #   - secretName: openclaw-tls
+        #     hosts:
+        #       - openclaw.local
 
+    # --------------------------------------------------------
+    # Persistent Storage
+    # On bare metal, uses the cluster's default StorageClass.
+    # Common options: local-path (k3s), openebs-hostpath,
+    # nfs-client, or longhorn.
+    # --------------------------------------------------------
     persistence:
       data:
         enabled: true
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
-        size: 10Gi
-        storageClass: longhorn
+        size: 5Gi
+        storageClass: "longhorn"
         globalMounts:
           - path: /data
 
+    # --------------------------------------------------------
+    # Network policy — disabled for dev simplicity.
+    # Enable and tighten rules before moving to production.
+    # --------------------------------------------------------
     networkpolicies:
       main:
         enabled: false
 
+    # --------------------------------------------------------
+    # openclaw application config (openclaw.json5)
+    # --------------------------------------------------------
     openclaw:
+      # Trusted proxy — set to your ingress controller pod CIDR
+      # or the node IP range on bare metal.
       trustedProxies:
-        - 10.0.0.0/8
-        - 10.42.0.0/16
-        - 192.168.0.0/16
+        - 10.0.0.0/8 # adjust to your cluster pod/node CIDR
+        - 10.42.0.0/16 # covers 10.42.x.x — standard k3s/Flannel pod CIDR
+        - 192.168.0.0/16 # common home/lab LAN range
+
       llm:
-        provider: anthropic
-        model: opus-4.5
+        provider: openai # anthropic | openai | openrouter | ollama
+        model: gpt-4o
+        # baseUrl: ""             # required for openrouter / ollama
+
       timezone: America/Los_Angeles
+
+      # ── Messaging channels ──────────────────────────────
+      # Uncomment the channels you want to enable.
+      # Tokens should live in the Secret, not here.
+
+      # channels:
+      #   telegram:
+      #     enabled: true
+      #   discord:
+      #     enabled: false
+      #   slack:
+      #     enabled: false
+
+      # ── Skills ──────────────────────────────────────────
+      # skills:
+      #   - name: web-search
+      #   - name: github
+
+    # --------------------------------------------------------
+    # Pod-level settings
+    # --------------------------------------------------------
+    # defaultPodOptions:
+    #   securityContext:
+    #     runAsNonRoot: true
+    #     runAsUser: 1000
+    #     runAsGroup: 1000
+    #     fsGroup: 1000
