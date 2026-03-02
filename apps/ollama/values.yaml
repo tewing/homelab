@@ -15,15 +15,15 @@ ollama:
     size: 30Gi
 
   ingress:
-    enabled: false
-    # className: traefik
-    # annotations:
-    #   cert-manager.io/cluster-issuer: letsencrypt-prod
-    # hosts:
-    #   - host: ollama.te-lab.org
-    #     paths:
-    #       - path: /
-    #         pathType: Prefix
+    enabled: true
+    className: traefik
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - host: ollama.example.com
+        paths:
+          - path: /
+            pathType: Prefix
     # tls:
     #   - secretName: ollama-tls
     #     hosts:
