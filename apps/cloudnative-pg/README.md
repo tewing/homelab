@@ -11,6 +11,7 @@ argocd app create "$APP" \
     --dest-namespace $APP \
     --sync-option CreateNamespace=true \
     --sync-option ServerSideApply=true
+argocd app sync $APP   
 ```
 
 ## Start a cluster
