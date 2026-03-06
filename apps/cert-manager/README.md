@@ -10,6 +10,7 @@ argocd app create "$APP" \
     --dest-server https://kubernetes.default.svc \
     --dest-namespace $APP \
     --sync-option CreateNamespace=true
+argocd app sync $APP   
 ```
 
 ## Post-install steps
