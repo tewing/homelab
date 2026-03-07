@@ -1,0 +1,9 @@
+# see https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+
+kube-prometheus-stack:
+  grafana:
+    enabled: true
+  prometheus:
+    enabled: true
+  alertmanager:
+    enabled: true
