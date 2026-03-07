@@ -3,10 +3,20 @@
 kube-prometheus-stack:
   grafana:
     enabled: true
-  prometheus:
-    enabled: true
   alertmanager:
     enabled: true
+  prometheus:
+    enabled: true
+    # ingress:
+    #   enabled: true
+    #   className: traefik
+    #   annotations:
+    #     cert-manager.io/cluster-issuer: letsencrypt-prod
+    #   hosts:
+    #     - host: prometheus.example.com
+    #       paths:
+    #         - path: /
+    #           pathType: Prefix
 
 
 
