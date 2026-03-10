@@ -59,3 +59,10 @@ ollama:
         hosts:
           - ollama.te-lab.org
 ```
+
+
+
+### test ollama
+```bash
+OLLAMA_HOST=http://ollama.example.com:80 ollama run gpt-oss:20b  "respond with ok"
+```
