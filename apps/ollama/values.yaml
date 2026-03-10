@@ -9,7 +9,8 @@ ollama:
     models:
       pull:
       - gpt-oss:20b
-      # - llama3.2
+      run:
+      - gpt-oss:20b
 
   persistentVolume:
     enabled: true
