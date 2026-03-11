@@ -7,55 +7,17 @@ kube-prometheus-stack:
     enabled: true
   prometheus:
     enabled: true
-    # ingress:
-    #   enabled: true
-    #   className: traefik
-    #   annotations:
-    #     cert-manager.io/cluster-issuer: letsencrypt-prod
-    #   hosts:
-    #     - host: prometheus.example.com
-    #       paths:
-    #         - path: /
-    #           pathType: Prefix
-
-
-
-# # see https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
-
-# kube-prometheus-stack:
-#   grafana:
-#     enabled: true
-#     # ingress:
-#     #   enabled: true
-#     #   className: traefik
-#     #   annotations:
-#     #     cert-manager.io/cluster-issuer: letsencrypt-prod
-#     #   hosts:
-#     #     - host: grafana.example.com
-#     #       paths:
-#     #         - path: /
-#     #           pathType: Prefix
-#   prometheus:
-#     enabled: true
-#     # ingress:
-#     #   enabled: true
-#     #   className: traefik
-#     #   annotations:
-#     #     cert-manager.io/cluster-issuer: letsencrypt-prod
-#     #   hosts:
-#     #     - host: prometheus.example.com
-#     #       paths:
-#     #         - path: /
-#     #           pathType: Prefix
-#   alertmanager:
-#     enabled: true
-#     # ingress:
-#     #   enabled: true
-#     #   className: traefik
-#     #   annotations:
-#     #     cert-manager.io/cluster-issuer: letsencrypt-prod
-#     #   hosts:
-#     #     - host: alertmanager.example.com
-#     #       paths:
-#     #         - path: /
-#     #           pathType: Prefix
+    prometheusSpec:
+      ingress:
+        enabled: true
+        ingressClassName: traefik
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+        hosts:
+          - prometheus.example.com
+        paths:
+          - /
+        tls:
+          - secretName: prometheus-tls
+            hosts:
+              - prometheus.example.com

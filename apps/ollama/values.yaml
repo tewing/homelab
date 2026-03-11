@@ -9,8 +9,11 @@ ollama:
     models:
       pull:
       - gpt-oss:20b
+      - qwen3.5:9b
+
       run:
       - gpt-oss:20b
+      - qwen3.5:9b
 
   persistentVolume:
     enabled: true
