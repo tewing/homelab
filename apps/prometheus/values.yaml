@@ -3,6 +3,17 @@
 kube-prometheus-stack:
   grafana:
     enabled: true
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      # annotations:
+      #   cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+        - grafana.example.com
+      # tls:
+      #   - secretName: grafana-tls
+      #     hosts:
+      #       - grafana.example.com
   alertmanager:
     enabled: true
   prometheus:
@@ -11,13 +22,13 @@ kube-prometheus-stack:
       ingress:
         enabled: true
         ingressClassName: traefik
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-prod
+        # annotations:
+        #   cert-manager.io/cluster-issuer: letsencrypt-prod
         hosts:
           - prometheus.example.com
         paths:
           - /
-        tls:
-          - secretName: prometheus-tls
-            hosts:
-              - prometheus.example.com
+        # tls:
+        #   - secretName: prometheus-tls
+        #     hosts:
+        #       - prometheus.example.com
